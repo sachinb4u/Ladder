@@ -1,7 +1,7 @@
 package com.sachin.game.api;
 
-import com.sachin.game.api.core.Cell;
-import com.sachin.game.api.core.GameMove;
+import com.sachin.game.api.impl.Cell;
+import com.sachin.game.api.impl.GameMove;
 
 import java.util.List;
 
@@ -10,7 +10,9 @@ import java.util.List;
  */
 public interface Player {
 
-    int rollDice();
+    String getName();
+
+    void setName(String name);
 
     Cell playMove(int diceValue);
 
@@ -19,5 +21,7 @@ public interface Player {
     void undoMove();
 
     List<GameMove> getMoveHistory();
+
+    boolean isPlayerWon();
 
 }

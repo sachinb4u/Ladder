@@ -5,11 +5,11 @@ package com.sachin.game.api;
  */
 public interface GameExecutor {
 
-    void setupGame(GameBoard gameBoard);
-
     void executeGame();
 
     void saveGame();
 
     void loadGame();
+
+    void endGame();
 }

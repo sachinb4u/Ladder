@@ -4,6 +4,8 @@ import com.sachin.game.api.DiceRoller;
 import com.sachin.game.api.GameController;
 import com.sachin.game.api.GameRule;
 import com.sachin.game.api.Player;
+import com.sachin.game.api.beans.Cell;
+import com.sachin.game.api.beans.GameConfiguration;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -35,7 +37,7 @@ public class GameCotrollerImpl implements GameController {
             boardCells.add(cell);
         }
 
-        this.diceRoller = new RandomDiceRoller();
+        this.diceRoller = new RandomDiceRollerImpl();
         this.gameRule = new GameRuleImpl(gameConfiguration);
     }
 
@@ -64,7 +66,7 @@ public class GameCotrollerImpl implements GameController {
         List<Player> playersNew = new ArrayList<Player>();
 
         for (int i = 0; i < noOfPlayers; i++) {
-            GamePlayer gamePlayer = new GamePlayer(this);
+            Player gamePlayer = new PlayerImpl(this);
             gamePlayer.setName("Player" + (i+1));
             playersNew.add(gamePlayer);
         }

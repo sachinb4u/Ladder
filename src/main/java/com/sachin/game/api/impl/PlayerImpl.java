@@ -2,6 +2,8 @@ package com.sachin.game.api.impl;
 
 import com.sachin.game.api.GameController;
 import com.sachin.game.api.Player;
+import com.sachin.game.api.beans.Cell;
+import com.sachin.game.api.beans.GameMove;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.Stack;
 /**
  * Created by C5203803 on 7/12/2014.
  */
-public class GamePlayer implements Player {
+public class PlayerImpl implements Player {
 
     private final GameController controller;
 
@@ -30,7 +32,7 @@ public class GamePlayer implements Player {
         this.name = name;
     }
 
-    public GamePlayer(GameController gameController){
+    public PlayerImpl(GameController gameController){
         controller = gameController;
     }
 

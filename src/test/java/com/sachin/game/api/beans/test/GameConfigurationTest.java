@@ -1,9 +1,9 @@
-package com.sachin.game.api.impl.test;
+package com.sachin.game.api.beans.test;
 
-import com.sachin.game.api.impl.Cell;
-import com.sachin.game.api.impl.GameConfiguration;
-import com.sachin.game.api.impl.Ladder;
-import com.sachin.game.api.impl.Snake;
+import com.sachin.game.api.beans.Cell;
+import com.sachin.game.api.beans.GameConfiguration;
+import com.sachin.game.api.beans.Ladder;
+import com.sachin.game.api.beans.Snake;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

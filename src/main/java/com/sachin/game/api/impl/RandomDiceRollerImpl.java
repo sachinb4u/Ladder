@@ -7,7 +7,7 @@ import java.security.SecureRandom;
 /**
  * Created by C5203803 on 7/12/2014.
  */
-public class RandomDiceRoller implements DiceRoller {
+public class RandomDiceRollerImpl implements DiceRoller {
 
     private static SecureRandom random = new SecureRandom();
 

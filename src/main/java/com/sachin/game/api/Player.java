@@ -1,7 +1,7 @@
 package com.sachin.game.api;
 
-import com.sachin.game.api.impl.Cell;
-import com.sachin.game.api.impl.GameMove;
+import com.sachin.game.api.beans.Cell;
+import com.sachin.game.api.beans.GameMove;
 
 import java.util.List;
 

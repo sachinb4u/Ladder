@@ -1,8 +1,10 @@
-package com.sachin.game.api.impl;
+package com.sachin.game.client;
 
 import com.sachin.game.api.GameController;
 import com.sachin.game.api.GameExecutor;
 import com.sachin.game.api.Player;
+import com.sachin.game.api.beans.GameConfiguration;
+import com.sachin.game.api.impl.GameCotrollerImpl;
 
 import java.util.List;
 import java.util.Scanner;
@@ -10,9 +12,10 @@ import java.util.Scanner;
 /**
  * Created by C5203803 on 7/13/2014.
  */
-public class GameExecutorImpl implements GameExecutor {
+public class CommandLineGameExecutorImpl implements GameExecutor {
 
     private static Scanner scanner = new Scanner(System.in);
+
     @Override
     public void executeGame() {
         /**

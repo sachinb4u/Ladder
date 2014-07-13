@@ -1,6 +1,10 @@
 package com.sachin.game.api.impl;
 
 import com.sachin.game.api.GameRule;
+import com.sachin.game.api.beans.Cell;
+import com.sachin.game.api.beans.GameConfiguration;
+import com.sachin.game.api.beans.Ladder;
+import com.sachin.game.api.beans.Snake;
 
 /**
  * Created by C5203803 on 7/13/2014.

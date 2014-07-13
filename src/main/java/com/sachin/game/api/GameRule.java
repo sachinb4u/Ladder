@@ -1,6 +1,6 @@
 package com.sachin.game.api;
 
-import com.sachin.game.api.impl.Cell;
+import com.sachin.game.api.beans.Cell;
 
 /**
  * Created by C5203803 on 7/11/2014.

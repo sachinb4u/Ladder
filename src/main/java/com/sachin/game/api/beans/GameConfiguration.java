@@ -1,4 +1,6 @@
-package com.sachin.game.api.impl;
+package com.sachin.game.api.beans;
+
+import com.sachin.game.api.util.ConfigConstants;
 
 import java.util.*;
 

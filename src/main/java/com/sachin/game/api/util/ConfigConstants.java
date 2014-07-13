@@ -1,4 +1,4 @@
-package com.sachin.game.api.impl;
+package com.sachin.game.api.util;
 
 /**
  * Created by C5203803 on 7/12/2014.

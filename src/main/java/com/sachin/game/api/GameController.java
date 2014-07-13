@@ -1,6 +1,6 @@
 package com.sachin.game.api;
 
-import com.sachin.game.api.impl.GameConfiguration;
+import com.sachin.game.api.beans.GameConfiguration;
 
 import java.util.List;
 

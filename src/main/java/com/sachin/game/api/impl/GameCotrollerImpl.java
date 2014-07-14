@@ -17,8 +17,8 @@ import java.util.Set;
  */
 public class GameCotrollerImpl implements GameController {
 
-    private Set<Cell> boardCells = new HashSet<Cell>();
-    private DiceRoller diceRoller;
+    private final Set<Cell> boardCells = new HashSet<Cell>();
+    private final DiceRoller diceRoller;
 
     private final GameConfiguration gameConfiguration;
     private final GameRule gameRule;

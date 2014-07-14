@@ -9,7 +9,7 @@ import java.security.SecureRandom;
  */
 public class RandomDiceRollerImpl implements DiceRoller {
 
-    private static SecureRandom random = new SecureRandom();
+    private static final SecureRandom random = new SecureRandom();
 
     /**
      * Returns a pseudorandom, uniformly distributed {@code int} value

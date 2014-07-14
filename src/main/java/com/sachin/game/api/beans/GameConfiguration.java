@@ -9,7 +9,7 @@ import java.util.*;
  *
  * GameConfiguration contains Snake and Ladder Game configuration properties
  *
- * @ImmutableClass
+ * ImmutableClass
  */
 public final class GameConfiguration {
 

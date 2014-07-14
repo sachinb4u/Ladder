@@ -11,7 +11,7 @@ import com.sachin.game.api.beans.Snake;
  */
 public class GameRuleImpl implements GameRule {
 
-    private GameConfiguration configuration;
+    private final GameConfiguration configuration;
 
     public GameRuleImpl(GameConfiguration configuration){
         this.configuration = configuration;

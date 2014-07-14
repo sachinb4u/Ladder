@@ -18,7 +18,7 @@ public class PlayerImpl implements Player {
 
     private Cell currentPosition = new Cell(0);
 
-    private Stack<GameMove> lastMoves = new Stack<GameMove>();
+    private final Stack<GameMove> lastMoves = new Stack<GameMove>();
 
     private String name;
 

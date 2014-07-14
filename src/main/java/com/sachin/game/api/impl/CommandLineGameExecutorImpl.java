@@ -14,7 +14,7 @@ import java.util.Scanner;
  */
 public class CommandLineGameExecutorImpl implements GameExecutor {
 
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     @Override
     public void executeGame() {

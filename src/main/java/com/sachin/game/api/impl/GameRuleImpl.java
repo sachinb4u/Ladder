@@ -49,6 +49,13 @@ public class GameRuleImpl implements GameRule {
             nextCell = ladder.getToCell();
         }
 
+        /**
+         * for winning exact number is required.
+         */
+        if(nextCell.getNumber() > configuration.getMaxCell()){
+            return currentCell;
+        }
+
         return nextCell;
     }
 }

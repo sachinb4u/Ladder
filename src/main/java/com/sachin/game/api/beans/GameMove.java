@@ -1,7 +1,10 @@
 package com.sachin.game.api.beans;
 
 /**
- * Created by C5203803 on 7/11/2014.
+ * Created by SachinBhosale on 7/11/2014.
+ *
+ * GameMove holds information of player's game move.
+ *
  */
 public class GameMove {
 
@@ -10,6 +13,9 @@ public class GameMove {
     private int diceValue;
 
     public GameMove(int fromCell, int toCell, int diceValueIn){
+        if(diceValueIn < 0 || diceValueIn > 6){
+            throw new IllegalArgumentException("Dice value should be in between 1 and 6");
+        }
         from = new Cell(fromCell);
         to = new Cell(toCell);
         diceValue = diceValueIn;
@@ -51,10 +57,10 @@ public class GameMove {
 
     @Override
     public String toString() {
-        return "Move{" +
+        return "\nMove{" +
                  from.getNumber() +
                 ", " + to.getNumber() +
                 ", dice=" + diceValue +
-                '}';
+                "}";
     }
 }

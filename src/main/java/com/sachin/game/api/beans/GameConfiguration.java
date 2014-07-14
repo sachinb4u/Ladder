@@ -5,9 +5,11 @@ import com.sachin.game.api.util.ConfigConstants;
 import java.util.*;
 
 /**
- * Created by C5203803 on 7/11/2014.
+ * Created by SachinBhosale on 7/11/2014.
  *
- * Immutable class
+ * GameConfiguration contains Snake and Ladder Game configuration properties
+ *
+ * @ImmutableClass
  */
 public final class GameConfiguration {
 
@@ -61,7 +63,11 @@ public final class GameConfiguration {
         // no default public constructor.
     }
 
-    public static class GameConfigurationBuilder {
+    /**
+     * Builder class for building GameConfiguration
+     *
+     */
+    public static final class GameConfigurationBuilder {
 
         private int rows;
         private int columns;
@@ -85,20 +91,20 @@ public final class GameConfiguration {
             this.columns = columns;
         }
 
-        public List<Ladder> getLadders() {
-            return ladders;
+        public boolean removeLadder(Ladder ladder) {
+            return ladders.remove(ladder);
         }
 
-        public void setLadders(List<Ladder> ladders) {
-            this.ladders = ladders;
+        public void addLadder(Ladder ladder) {
+            this.ladders.add(ladder);
         }
 
-        public List<Snake> getSnakes() {
-            return snakes;
+        public boolean removeSnake(Snake snake) {
+            return snakes.remove(snake);
         }
 
-        public void setSnakes(List<Snake> snakes) {
-            this.snakes = snakes;
+        public void addSnake(Snake snake) {
+            this.snakes.add(snake);
         }
 
         public int getNoOfPlayers() {
@@ -109,6 +115,12 @@ public final class GameConfiguration {
             this.noOfPlayers = noOfPlayers;
         }
 
+        /**
+         * Get configuration building on GameConfigurationBuilder values
+         *
+         * @throws java.lang.IllegalStateException
+         * @return GameConfiguration
+         */
         public GameConfiguration buildCongifuration(){
             GameConfiguration gameConfiguration = new GameConfiguration();
 
@@ -119,24 +131,68 @@ public final class GameConfiguration {
             gameConfiguration.maxCell = this.rows * this.columns;
             gameConfiguration.noOfPlayers = this.noOfPlayers;
 
+            validateGameConfiguration(gameConfiguration);
+
             return  gameConfiguration;
         }
 
+        /**
+         * Get default configuration based on properties set in config.properties
+         *
+         * @throws java.lang.IllegalStateException
+         * @return GameConfiguration
+         */
         public static GameConfiguration getDefaultGameConfiguration(){
 
             GameConfigurationBuilder builder = new GameConfigurationBuilder();
 
             builder.setRows(Integer.parseInt(configBundle.getString(ConfigConstants.rows.name())));
             builder.setColumns(Integer.parseInt(configBundle.getString(ConfigConstants.columns.name())));
-            builder.setLadders(getDefaultLadders());
-            builder.setSnakes(getDefaultSnakes());
+            builder.ladders = getDefaultLadders();
+            builder.snakes = getDefaultSnakes();
             builder.setNoOfPlayers(Integer.parseInt(configBundle.getString(ConfigConstants.noOfPlayers.name())));
 
             GameConfiguration defaultGameConfiguration = builder.buildCongifuration();
 
+            validateGameConfiguration(defaultGameConfiguration);
+
             return  defaultGameConfiguration;
         }
 
+        /**
+         * Validate GameConfiguration before returning the instance.
+         *
+         * @throws IllegalStateException
+         * @param configuration
+         */
+        private static void validateGameConfiguration(GameConfiguration configuration) {
+            if(configuration.rows < 1 || configuration.rows > 99){
+                throw new IllegalStateException("Rows number should be between 1 and 99");
+            }
+
+            if(configuration.columns < 1 || configuration.columns > 99){
+                throw new IllegalStateException("Columns number should be between 1 and 99");
+            }
+
+            if(configuration.maxCell > 999){
+                throw new IllegalStateException("Cells greater than 999 are not supported");
+            }
+
+            if(configuration.noOfPlayers > 5){
+                throw new IllegalStateException("Game players more than 5 are not supported");
+            }
+
+            if(configuration.ladderMap.keySet().contains(configuration.snakeMap.keySet())){
+                throw new IllegalStateException("Ladder and Snake cannot have at the same cell");
+            }
+        }
+
+
+        /**
+         * Read ladders property from config bundle
+         *
+         * @return
+         */
         private static List<Ladder> getDefaultLadders() {
             String ladderString = configBundle.getString(ConfigConstants.ladders.name());
             StringTokenizer tokenizer = new StringTokenizer(ladderString, ",");
@@ -155,6 +211,11 @@ public final class GameConfiguration {
             return ladderList;
         }
 
+        /**
+         * Read snakes property from config bundle
+         *
+         * @return
+         */
         private static List<Snake> getDefaultSnakes() {
             String snakesStr = configBundle.getString(ConfigConstants.snakes.name());
 
@@ -173,6 +234,12 @@ public final class GameConfiguration {
             return snakesList;
         }
 
+        /**
+         * Convert ladders list to map of (fromCellNumber, Ladder)
+         *
+         * @param list
+         * @return
+         */
         private static Map<Integer, Ladder> getLadderMapFromList(List<Ladder> list){
             Map<Integer, Ladder> ladderMap = new HashMap<Integer, Ladder>();
 
@@ -183,6 +250,12 @@ public final class GameConfiguration {
             return ladderMap;
         }
 
+        /**
+         * Convert snakes list to map of (fromCellNumber, Snake)
+         *
+         * @param list
+         * @return
+         */
         private static Map<Integer, Snake> getSnakesMapFromList(List<Snake> list){
             Map<Integer, Snake> snakeMap = new HashMap<Integer, Snake>();
 

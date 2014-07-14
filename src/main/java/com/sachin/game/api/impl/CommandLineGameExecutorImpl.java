@@ -1,4 +1,4 @@
-package com.sachin.game.client;
+package com.sachin.game.api.impl;
 
 import com.sachin.game.api.GameController;
 import com.sachin.game.api.GameExecutor;

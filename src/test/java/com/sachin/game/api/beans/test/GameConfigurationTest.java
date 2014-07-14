@@ -27,9 +27,9 @@ public class GameConfigurationTest {
     @Test
     public void testDefaultConfiguration() throws Exception {
 
-        Assert.assertTrue("Default Columns are 10" ,10 == defaultConfiguration.getColumns());
+        Assert.assertTrue("Default Columns are 12" ,12 == defaultConfiguration.getColumns());
         Assert.assertTrue("Default rows are 10" ,10 == defaultConfiguration.getRows());
-        Assert.assertTrue("Default Columns are 100" ,100 == defaultConfiguration.getMaxCell());
+        Assert.assertTrue("Default Columns are 120" ,120 == defaultConfiguration.getMaxCell());
         Assert.assertTrue("No of players is 2", 2 == defaultConfiguration.getNoOfPlayers());
 
     }
@@ -48,7 +48,9 @@ public class GameConfigurationTest {
         Ladder ladder2 = new Ladder(20,38);
 
         List<Ladder> ladders = Arrays.asList(ladder, ladder1, ladder2);
-        builder.setLadders(ladders);
+        builder.addLadder(ladder);
+        builder.addLadder(ladder1);
+        builder.addLadder(ladder2);
 
 
         Snake snake = new Snake(17, 7);
@@ -56,13 +58,15 @@ public class GameConfigurationTest {
         Snake snake2 = new Snake(62, 19);
 
         List<Snake> snakes = Arrays.asList(snake, snake1, snake2);
-        builder.setSnakes(snakes);
+        builder.addSnake(snake);
+        builder.addSnake(snake1);
+        builder.addSnake(snake2);
 
         GameConfiguration configuration = builder.buildCongifuration();
 
         Assert.assertTrue("Config Columns are 12" ,12 == configuration.getColumns());
         Assert.assertTrue("Config rows are 10" ,10 == configuration.getRows());
-        Assert.assertTrue("Default Columns are 120" ,120 == configuration.getMaxCell());
+        Assert.assertTrue("Total cells are 120" ,120 == configuration.getMaxCell());
         Assert.assertTrue("No of players is 3", 3 == configuration.getNoOfPlayers());
 
         Assert.assertTrue(ladder.equals(configuration.getLadderForCell(new Cell(4))));
@@ -82,4 +86,17 @@ public class GameConfigurationTest {
 
     }
 
+    @Test
+    public void testInvalidConfiguration() throws Exception {
+
+        GameConfiguration.GameConfigurationBuilder builder = new GameConfiguration.GameConfigurationBuilder();
+        try {
+            GameConfiguration configuration1 = builder.buildCongifuration();
+        }catch (IllegalStateException ex){
+            Assert.assertTrue("Invalid configuration should throw an exception", true);
+            return;
+        }
+
+        Assert.assertTrue("Invalid configuration should throw an exception", false);
+    }
 }

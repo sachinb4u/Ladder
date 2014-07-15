@@ -1,0 +1,228 @@
+Let's start a game.
+Enter name for Player1
+Messi
+Enter name for Player2
+Klose
+Messi - CurrentPosition: 0
+Dice Rolled : 2
+Messi - NewPosition: 2
+******************************************
+Klose - CurrentPosition: 0
+Dice Rolled : 2
+Klose - NewPosition: 2
+******************************************
+Messi - CurrentPosition: 2
+Dice Rolled : 5
+Messi - NewPosition: 7
+******************************************
+Klose - CurrentPosition: 2
+Dice Rolled : 4
+Klose - NewPosition: 6
+******************************************
+Messi - CurrentPosition: 7
+Dice Rolled : 5
+Messi - NewPosition: 12
+******************************************
+Klose - CurrentPosition: 6
+Dice Rolled : 2
+Klose - NewPosition: 8
+******************************************
+Messi - CurrentPosition: 12
+Dice Rolled : 2
+Messi - NewPosition: 14
+******************************************
+Klose - CurrentPosition: 8
+Dice Rolled : 1
+Klose - NewPosition: 31
+******************************************
+Messi - CurrentPosition: 14
+Dice Rolled : 6
+Messi - NewPosition: 38
+******************************************
+Klose - CurrentPosition: 31
+Dice Rolled : 4
+Klose - NewPosition: 35
+******************************************
+Messi - CurrentPosition: 38
+Dice Rolled : 2
+Messi - NewPosition: 59
+******************************************
+Klose - CurrentPosition: 35
+Dice Rolled : 1
+Klose - NewPosition: 36
+******************************************
+Messi - CurrentPosition: 59
+Dice Rolled : 1
+Messi - NewPosition: 60
+******************************************
+Klose - CurrentPosition: 36
+Dice Rolled : 6
+Klose - NewPosition: 42
+******************************************
+Messi - CurrentPosition: 60
+Dice Rolled : 6
+Messi - NewPosition: 66
+******************************************
+Klose - CurrentPosition: 42
+Dice Rolled : 5
+Klose - NewPosition: 47
+******************************************
+Messi - CurrentPosition: 66
+Dice Rolled : 2
+Messi - NewPosition: 68
+******************************************
+Klose - CurrentPosition: 47
+Dice Rolled : 6
+Klose - NewPosition: 53
+******************************************
+Messi - CurrentPosition: 68
+Dice Rolled : 3
+Messi - NewPosition: 91
+******************************************
+Klose - CurrentPosition: 53
+Dice Rolled : 1
+Klose - NewPosition: 34
+******************************************
+Messi - CurrentPosition: 91
+Dice Rolled : 5
+Messi - NewPosition: 96
+******************************************
+Klose - CurrentPosition: 34
+Dice Rolled : 1
+Klose - NewPosition: 35
+******************************************
+Messi - CurrentPosition: 96
+Dice Rolled : 1
+Messi - NewPosition: 97
+******************************************
+Klose - CurrentPosition: 35
+Dice Rolled : 2
+Klose - NewPosition: 37
+******************************************
+Messi - CurrentPosition: 97
+Dice Rolled : 6
+Messi - NewPosition: 103
+******************************************
+Klose - CurrentPosition: 37
+Dice Rolled : 4
+Klose - NewPosition: 41
+******************************************
+Messi - CurrentPosition: 103
+Dice Rolled : 4
+Messi - NewPosition: 107
+******************************************
+Klose - CurrentPosition: 41
+Dice Rolled : 5
+Klose - NewPosition: 46
+******************************************
+Messi - CurrentPosition: 107
+Dice Rolled : 1
+Messi - NewPosition: 108
+******************************************
+Klose - CurrentPosition: 46
+Dice Rolled : 1
+Klose - NewPosition: 47
+******************************************
+Messi - CurrentPosition: 108
+Dice Rolled : 5
+Messi - NewPosition: 113
+******************************************
+Klose - CurrentPosition: 47
+Dice Rolled : 6
+Klose - NewPosition: 53
+******************************************
+Messi - CurrentPosition: 113
+Dice Rolled : 6
+Messi - NewPosition: 119
+******************************************
+Klose - CurrentPosition: 53
+Dice Rolled : 5
+Klose - NewPosition: 58
+******************************************
+Messi - CurrentPosition: 119
+Dice Rolled : 3
+Messi - NewPosition: 119
+******************************************
+Klose - CurrentPosition: 58
+Dice Rolled : 6
+Klose - NewPosition: 60
+******************************************
+Messi - CurrentPosition: 119
+Dice Rolled : 5
+Messi - NewPosition: 119
+******************************************
+Klose - CurrentPosition: 60
+Dice Rolled : 2
+Klose - NewPosition: 19
+******************************************
+Messi - CurrentPosition: 119
+Dice Rolled : 5
+Messi - NewPosition: 119
+******************************************
+Klose - CurrentPosition: 19
+Dice Rolled : 5
+Klose - NewPosition: 24
+******************************************
+Messi - CurrentPosition: 119
+Dice Rolled : 3
+Messi - NewPosition: 119
+******************************************
+Klose - CurrentPosition: 24
+Dice Rolled : 2
+Klose - NewPosition: 26
+******************************************
+Messi - CurrentPosition: 119
+Dice Rolled : 1
+Messi - NewPosition: 120
+******************************************
+Congratulations Messi! You won !! 
+Game Summary !!
+Player : Messi's Game History: ##
+[
+Move{0, 2, dice=2}, 
+Move{2, 7, dice=5}, 
+Move{7, 12, dice=5}, 
+Move{12, 14, dice=2}, 
+Move{14, 38, dice=6}, 
+Move{38, 59, dice=2}, 
+Move{59, 60, dice=1}, 
+Move{60, 66, dice=6}, 
+Move{66, 68, dice=2}, 
+Move{68, 91, dice=3}, 
+Move{91, 96, dice=5}, 
+Move{96, 97, dice=1}, 
+Move{97, 103, dice=6}, 
+Move{103, 107, dice=4}, 
+Move{107, 108, dice=1}, 
+Move{108, 113, dice=5}, 
+Move{113, 119, dice=6}, 
+Move{119, 119, dice=3}, 
+Move{119, 119, dice=5}, 
+Move{119, 119, dice=5}, 
+Move{119, 119, dice=3}, 
+Move{119, 120, dice=1}]
+Player : Klose's Game History: ##
+[
+Move{0, 2, dice=2}, 
+Move{2, 6, dice=4}, 
+Move{6, 8, dice=2}, 
+Move{8, 31, dice=1}, 
+Move{31, 35, dice=4}, 
+Move{35, 36, dice=1}, 
+Move{36, 42, dice=6}, 
+Move{42, 47, dice=5}, 
+Move{47, 53, dice=6}, 
+Move{53, 34, dice=1}, 
+Move{34, 35, dice=1}, 
+Move{35, 37, dice=2}, 
+Move{37, 41, dice=4}, 
+Move{41, 46, dice=5}, 
+Move{46, 47, dice=1}, 
+Move{47, 53, dice=6}, 
+Move{53, 58, dice=5}, 
+Move{58, 60, dice=6}, 
+Move{60, 19, dice=2}, 
+Move{19, 24, dice=5}, 
+Move{24, 26, dice=2}]
+GameSetup : GameConfiguration{rows=10, columns=12, ladders=[Ladder{from=51, to=67}, Ladder{from=71, to=91}, Ladder{from=4, to=14}, Ladder{from=20, to=38}, Ladder{from=9, to=31}, Ladder{from=40, to=59}, Ladder{from=63, to=81}, Ladder{from=28, to=84}], snakes=[Snake{from=17, to=7}, Snake{from=87, to=24}, Snake{from=64, to=60}, Snake{from=99, to=78}, Snake{from=54, to=34}, Snake{from=93, to=73}, Snake{from=95, to=75}, Snake{from=62, to=19}], noOfPlayers=2, maxCell=120}
+Play New Game ?? ( Yes / No ) 

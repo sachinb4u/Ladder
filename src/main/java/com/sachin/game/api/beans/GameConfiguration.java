@@ -266,4 +266,17 @@ public final class GameConfiguration {
             return snakeMap;
         }
     }
+
+
+    @Override
+    public String toString() {
+        return "GameConfiguration{" +
+                "rows=" + rows +
+                ", columns=" + columns +
+                ", ladders=" + ladderMap.values() +
+                ", snakes=" + snakeMap.values() +
+                ", noOfPlayers=" + noOfPlayers +
+                ", maxCell=" + maxCell +
+                '}';
+    }
 }

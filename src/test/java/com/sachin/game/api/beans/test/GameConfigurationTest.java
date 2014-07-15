@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by C5203803 on 7/13/2014.
+ * Created by SachinBhosale on 7/13/2014.
  */
 public class GameConfigurationTest {
 

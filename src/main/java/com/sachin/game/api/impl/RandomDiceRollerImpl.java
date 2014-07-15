@@ -5,7 +5,7 @@ import com.sachin.game.api.DiceRoller;
 import java.security.SecureRandom;
 
 /**
- * Created by C5203803 on 7/12/2014.
+ * Created by SachinBhosale on 7/12/2014.
  */
 public class RandomDiceRollerImpl implements DiceRoller {
 

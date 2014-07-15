@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Created by C5203803 on 7/13/2014.
+ * Created by SachinBhosale on 7/13/2014.
  */
 public class CommandLineGameExecutorImpl implements GameExecutor {
 
@@ -60,6 +60,7 @@ public class CommandLineGameExecutorImpl implements GameExecutor {
                 showUserMessage(player.getMoveHistory().toString());
             }
 
+            showUserMessage("GameSetup : " + configuration.toString());
             showUserMessage("Play New Game ?? ( Yes / No ) ");
 
         }while(scanner.next().matches("[yY][\\w]*"));

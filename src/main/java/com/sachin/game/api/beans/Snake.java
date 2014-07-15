@@ -1,7 +1,7 @@
 package com.sachin.game.api.beans;
 
 /**
- * Created by C5203803 on 7/11/2014.
+ * Created by SachinBhosale on 7/11/2014.
  */
 public class Snake {
     private final Cell fromCell;
@@ -46,8 +46,8 @@ public class Snake {
     @Override
     public String toString() {
         return "Snake{" +
-                "fromCell=" + fromCell +
-                ", toCell=" + toCell +
+                "from=" + fromCell.getNumber() +
+                ", to=" + toCell.getNumber() +
                 '}';
     }
 }

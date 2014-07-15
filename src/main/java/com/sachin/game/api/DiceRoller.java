@@ -1,7 +1,7 @@
 package com.sachin.game.api;
 
 /**
- * Created by C5203803 on 7/12/2014.
+ * Created by SachinBhosale on 7/12/2014.
  */
 public interface DiceRoller {
 

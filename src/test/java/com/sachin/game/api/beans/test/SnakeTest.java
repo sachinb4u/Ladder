@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Created by C5203803 on 7/14/2014.
+ * Created by SachinBhosale on 7/14/2014.
  */
 public class SnakeTest {
 

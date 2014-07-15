@@ -7,7 +7,7 @@ import com.sachin.game.api.beans.Ladder;
 import com.sachin.game.api.beans.Snake;
 
 /**
- * Created by C5203803 on 7/13/2014.
+ * Created by SachinBhosale on 7/13/2014.
  */
 public class GameRuleImpl implements GameRule {
 

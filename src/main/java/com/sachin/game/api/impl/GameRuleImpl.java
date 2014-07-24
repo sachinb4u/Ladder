@@ -33,6 +33,10 @@ public class GameRuleImpl implements GameRule {
 
     @Override
     public Cell getNextMove(Cell currentCell, int diceValue){
+        if(diceValue < 1 || diceValue > 6){
+            throw new IllegalArgumentException("DiceValue cannot be greater than 6 and less than 1");
+        }
+
         int nextCellNumber = currentCell.getNumber() + diceValue;
 
         Cell nextCell = new Cell(nextCellNumber);

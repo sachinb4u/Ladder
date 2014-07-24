@@ -21,7 +21,7 @@ public class RandomDiceRollerImplTest {
     @Test
     public void testRollDice() throws Exception {
         int diceValue = randomDiceRollerImpl.rollDice();
-        System.out.println("DiceValue = " + diceValue);
+//        System.out.println("DiceValue = " + diceValue);
         Assert.assertTrue("DiceValue should be less than 6 and greater than 0", diceValue <= 6 && diceValue > 0);
     }
 }

@@ -4,7 +4,6 @@ import com.sachin.game.api.GameController;
 import com.sachin.game.api.GameExecutor;
 import com.sachin.game.api.Player;
 import com.sachin.game.api.beans.GameConfiguration;
-import com.sachin.game.api.impl.GameCotrollerImpl;
 
 import java.util.List;
 import java.util.Scanner;
@@ -26,7 +25,7 @@ public class CommandLineGameExecutorImpl implements GameExecutor {
         /**
          * Get the GameController to run the game
          */
-        GameController controller = new GameCotrollerImpl(configuration);
+        GameController controller = new GameControllerImpl(configuration);
 
         do{
             showUserMessage("Let's start a game.");

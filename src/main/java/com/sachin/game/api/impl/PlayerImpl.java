@@ -38,9 +38,9 @@ public class PlayerImpl implements Player {
 
     @Override
     public Cell playMove(int diceValue) {
-        Cell nextCell = controller.getGameRule().getNextMove(currentPosition, diceValue);
+        Cell nextCell = controller.getGameRule().getNextMove(getCurrentPosition(), diceValue);
 
-        GameMove gameMove = new GameMove(currentPosition.getNumber(), nextCell.getNumber(),diceValue);
+        GameMove gameMove = new GameMove(getCurrentPosition().getNumber(), nextCell.getNumber(),diceValue);
         lastMoves.add(gameMove);
 
         currentPosition = nextCell;

@@ -12,14 +12,14 @@ import java.util.List;
 /**
  * Created by SachinBhosale on 7/12/2014.
  */
-public class GameCotrollerImpl implements GameController {
+public class GameControllerImpl implements GameController {
 
     private final DiceRoller diceRoller;
     private final GameConfiguration gameConfiguration;
     private final GameRule gameRule;
     private List<Player> players;
 
-    public GameCotrollerImpl(GameConfiguration configuration) {
+    public GameControllerImpl(GameConfiguration configuration) {
         this.gameConfiguration = configuration;
         this.diceRoller = new RandomDiceRollerImpl();
         this.gameRule = new GameRuleImpl(gameConfiguration);

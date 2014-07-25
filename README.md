@@ -33,3 +33,8 @@ Validations
 Unit Tests
 ----------
   - Unit tests for few classes are added
+  - Update : 25 July 2014 - testcases added
+            - DiceRollerTest
+            - GameControllerTest
+            - GameRuleTest
+            - PlayerTest

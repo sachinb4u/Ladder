@@ -1,6 +1,8 @@
 Ladder
 ======
 
+Author - Sachin Bhosale     http://www.linkedin.com/in/sachinbhosale
+
 Features
 --------
   - Game can support multiple player

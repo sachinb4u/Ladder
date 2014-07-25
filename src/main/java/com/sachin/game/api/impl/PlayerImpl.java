@@ -74,7 +74,7 @@ public class PlayerImpl implements Player {
     @Override
     public boolean isPlayerWon() {
 
-        return currentPosition.getNumber() >= controller.getGameConfiguration().getMaxCell() ? true : false;
+        return getCurrentPosition().getNumber() == controller.getGameConfiguration().getMaxCell() ? true : false;
     }
 
 }

@@ -10,8 +10,10 @@ import java.util.*;
  * GameConfiguration contains Snake and Ladder Game configuration properties
  *
  * ImmutableClass
+ *
+ * Update 25/07/14: final removed for test stubbing
  */
-public final class GameConfiguration {
+public class GameConfiguration {
 
     private static final ResourceBundle configBundle = ResourceBundle.getBundle("config");
 

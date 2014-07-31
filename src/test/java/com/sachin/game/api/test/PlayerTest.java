@@ -1,12 +1,9 @@
 package com.sachin.game.api.test;
 
 import com.sachin.game.api.GameController;
-import com.sachin.game.api.GameRule;
 import com.sachin.game.api.Player;
-import com.sachin.game.api.beans.Cell;
-import com.sachin.game.api.beans.GameConfiguration;
-import com.sachin.game.api.beans.GameMove;
-import com.sachin.game.api.impl.PlayerImpl;
+import com.sachin.game.api.GameBoard;
+import com.sachin.game.impl.PlayerImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,10 +22,7 @@ public class PlayerTest {
     private Player player;
 
     @Mock
-    private GameConfiguration configuration;
-
-    @Mock
-    private GameRule gameRule;
+    private GameBoard configuration;
 
     @Mock
     private GameController controller;
@@ -38,7 +32,6 @@ public class PlayerTest {
         MockitoAnnotations.initMocks(this);
 
         Assert.assertNotNull(controller);
-        Assert.assertNotNull(gameRule);
 
         player = new PlayerImpl(controller);
 
@@ -67,8 +60,8 @@ public class PlayerTest {
      */
     @Test
     public void testPlayMove(){
-        Cell expected = new Cell(5);
-        Cell current = new Cell(2);
+        int expected =5;
+        int current = 2;
 
         /**
          * getCurrentPosition gets called twice while getting next-move and adding GameMove history
@@ -81,10 +74,9 @@ public class PlayerTest {
          - Game moves are tested as part of GameRule class
          - Here only test Player logic
          */
-        when(gameRule.getNextMove(any(Cell.class), anyInt())).thenReturn(expected);
-        when(controller.getGameRule()).thenReturn(gameRule);
+        when(controller.getNextMove(anyInt(), anyInt())).thenReturn(expected);
 
-        Cell actual = player.playMove(3);
+        int actual = player.playMove(3);
 
         // assert new position is set to cell returned by GameRule
         Assert.assertEquals(expected, actual);
@@ -98,26 +90,25 @@ public class PlayerTest {
 
     @Test
     public void testGetCurrentPosition(){
-        Cell current = new Cell(2);
+        int current = 2;
         when(player.getCurrentPosition()).thenReturn(current);
 
-        Cell res = player.getCurrentPosition();
+        int res = player.getCurrentPosition();
 
         Assert.assertEquals(res, current);
     }
 
     @Test
     public void testGetMoveHistory(){
-        Cell current = new Cell(2);
-        Cell res = new Cell(7);
-        when(gameRule.getNextMove(any(Cell.class), anyInt())).thenReturn(res);
-        when(controller.getGameRule()).thenReturn(gameRule);
+        int current = 2;
+        int res = 7;
+        when(controller.getNextMove(anyInt(), anyInt())).thenReturn(res);
         when(player.getCurrentPosition()). thenReturn(current).thenReturn(current).thenCallRealMethod();
         when(player.getMoveHistory()).thenCallRealMethod();
 
         player.playMove(5);
 
-        List<GameMove> moveList = player.getMoveHistory();
+        List<String> moveList = player.getMoveHistory();
 //        System.out.println(moveList);
         Assert.assertNotNull(moveList);
         Assert.assertTrue(moveList.size() > 0);
@@ -125,9 +116,9 @@ public class PlayerTest {
 
     @Test
     public void testIsPlayerWonInvalid(){
-        when(controller.getGameConfiguration()).thenReturn(configuration);
+        when(controller.getGameBoard()).thenReturn(configuration);
         when(configuration.getMaxCell()).thenReturn(100);
-        when(player.getCurrentPosition()).thenReturn(new Cell(99));
+        when(player.getCurrentPosition()).thenReturn(99);
 
         boolean result = player.isPlayerWon();
 
@@ -136,10 +127,10 @@ public class PlayerTest {
 
     @Test
     public void testIsPlayerWonInvalid2(){
-        when(controller.getGameConfiguration()).thenReturn(configuration);
+        when(controller.getGameBoard()).thenReturn(configuration);
         when(configuration.getMaxCell()).thenReturn(100);
         // player should no go to current position greater than max cell
-        when(player.getCurrentPosition()).thenReturn(new Cell(104));
+        when(player.getCurrentPosition()).thenReturn(104);
 
         boolean result = player.isPlayerWon();
 
@@ -148,9 +139,9 @@ public class PlayerTest {
 
     @Test
     public void testIsPlayerWonValid(){
-        when(controller.getGameConfiguration()).thenReturn(configuration);
+        when(controller.getGameBoard()).thenReturn(configuration);
         when(configuration.getMaxCell()).thenReturn(100);
-        when(player.getCurrentPosition()).thenReturn(new Cell(100));
+        when(player.getCurrentPosition()).thenReturn(100);
 
         boolean result = player.isPlayerWon();
 

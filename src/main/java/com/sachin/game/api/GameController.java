@@ -1,7 +1,5 @@
 package com.sachin.game.api;
 
-import com.sachin.game.api.beans.GameConfiguration;
-
 import java.util.List;
 
 /**
@@ -9,7 +7,7 @@ import java.util.List;
  */
 public interface GameController {
 
-    GameConfiguration getGameConfiguration ();
+    GameBoard getGameBoard();
 
     void displayBoard();
 
@@ -17,7 +15,7 @@ public interface GameController {
 
     int rollDice();
 
-    GameRule getGameRule();
-
     void resetPlayers();
+
+    int getNextMove(int currentCell, int diceValue);
 }

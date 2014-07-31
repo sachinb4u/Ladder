@@ -1,7 +1,5 @@
 package com.sachin.game.api;
 
-import com.sachin.game.api.beans.Cell;
-import com.sachin.game.api.beans.GameMove;
 
 import java.util.List;
 
@@ -14,13 +12,13 @@ public interface Player {
 
     void setName(String name);
 
-    Cell playMove(int diceValue);
+    int playMove(int diceValue);
 
-    Cell getCurrentPosition();
+    int getCurrentPosition();
 
     void undoMove();
 
-    List<GameMove> getMoveHistory();
+    List<String> getMoveHistory();
 
     boolean isPlayerWon();
 

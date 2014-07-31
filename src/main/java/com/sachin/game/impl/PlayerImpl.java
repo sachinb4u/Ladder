@@ -1,9 +1,7 @@
-package com.sachin.game.api.impl;
+package com.sachin.game.impl;
 
 import com.sachin.game.api.GameController;
 import com.sachin.game.api.Player;
-import com.sachin.game.api.beans.Cell;
-import com.sachin.game.api.beans.GameMove;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +14,9 @@ public class PlayerImpl implements Player {
 
     private final GameController controller;
 
-    private Cell currentPosition = new Cell(0);
+    private int currentPosition;
 
-    private final Stack<GameMove> lastMoves = new Stack<GameMove>();
+    private final Stack<String> lastMoves = new Stack<String>();
 
     private String name;
 
@@ -37,34 +35,36 @@ public class PlayerImpl implements Player {
     }
 
     @Override
-    public Cell playMove(int diceValue) {
-        Cell nextCell = controller.getGameRule().getNextMove(getCurrentPosition(), diceValue);
+    public int playMove(int diceValue) {
+        int nextCell = controller.getNextMove(getCurrentPosition(), diceValue);
 
-        GameMove gameMove = new GameMove(getCurrentPosition().getNumber(), nextCell.getNumber(),diceValue);
-        lastMoves.add(gameMove);
+        StringBuilder builder = new StringBuilder("f(").append(getCurrentPosition()).append(",").append(diceValue).append(")=").append(nextCell);
+        lastMoves.add(builder.toString());
 
         currentPosition = nextCell;
         return nextCell;
     }
 
     @Override
-    public Cell getCurrentPosition() {
+    public int getCurrentPosition() {
         return currentPosition;
     }
 
     @Override
     public void undoMove() {
-        GameMove lastMove = lastMoves.pop();
 
-        currentPosition = lastMove.getFrom();
+        String lastMove = lastMoves.pop();
+
+        String[] strArr = lastMove.split("=");
+        currentPosition = Integer.parseInt(strArr[1]);
     }
 
     @Override
-    public List<GameMove> getMoveHistory() {
+    public List<String> getMoveHistory() {
 
-        List<GameMove> history = new ArrayList<GameMove>();
+        List<String> history = new ArrayList<String>();
 
-        for(GameMove gameMove : lastMoves){
+        for(String gameMove : lastMoves){
             history.add(gameMove);
         }
 
@@ -74,7 +74,7 @@ public class PlayerImpl implements Player {
     @Override
     public boolean isPlayerWon() {
 
-        return getCurrentPosition().getNumber() == controller.getGameConfiguration().getMaxCell() ? true : false;
+        return getCurrentPosition() == controller.getGameBoard().getMaxCell() ? true : false;
     }
 
 }

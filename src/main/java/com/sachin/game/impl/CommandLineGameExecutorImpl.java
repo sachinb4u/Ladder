@@ -1,9 +1,8 @@
-package com.sachin.game.api.impl;
+package com.sachin.game.impl;
 
 import com.sachin.game.api.GameController;
 import com.sachin.game.api.GameExecutor;
 import com.sachin.game.api.Player;
-import com.sachin.game.api.beans.GameConfiguration;
 
 import java.util.List;
 import java.util.Scanner;
@@ -20,7 +19,7 @@ public class CommandLineGameExecutorImpl implements GameExecutor {
         /**
          * Get / Build Game Configuration
          */
-        GameConfiguration configuration = GameConfiguration.GameConfigurationBuilder.getDefaultGameConfiguration();
+        GameBoardImpl configuration = GameBoardImpl.GameConfigurationBuilder.getDefaultGameConfiguration();
 
         /**
          * Get the GameController to run the game
@@ -88,7 +87,7 @@ public class CommandLineGameExecutorImpl implements GameExecutor {
             /**
              * Show current Position
              */
-            showUserMessage(player.getName() + " - CurrentPosition: " + player.getCurrentPosition().getNumber());
+            showUserMessage(player.getName() + " - CurrentPosition: " + player.getCurrentPosition());
 
             /**
              * roll dice to get players dice value
@@ -102,7 +101,7 @@ public class CommandLineGameExecutorImpl implements GameExecutor {
              */
             player.playMove(diceValue);
 
-            showUserMessage(player.getName() + " - NewPosition: " + player.getCurrentPosition().getNumber());
+            showUserMessage(player.getName() + " - NewPosition: " + player.getCurrentPosition());
 
             showUserMessage("******************************************");
 

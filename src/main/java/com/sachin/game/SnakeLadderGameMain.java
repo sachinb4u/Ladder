@@ -1,7 +1,7 @@
-package com.sachin.game.client;
+package com.sachin.game;
 
 import com.sachin.game.api.GameExecutor;
-import com.sachin.game.api.impl.CommandLineGameExecutorImpl;
+import com.sachin.game.impl.CommandLineGameExecutorImpl;
 
 /**
  * Created by SachinBhosale on 7/13/2014.

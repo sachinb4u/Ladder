@@ -16,23 +16,23 @@ public class GameConfigurationTest {
 
     @Before
     public void setUp() throws Exception {
-        defaultConfiguration = GameBoardImpl.GameConfigurationBuilder.getDefaultGameConfiguration();
+        defaultConfiguration = GameBoardImpl.GameBoardBuilder.getDefaultGameConfiguration();
     }
 
     @Test
     public void testDefaultConfiguration() throws Exception {
 
-        Assert.assertTrue("Default Columns are 12" ,12 == defaultConfiguration.getColumns());
-        Assert.assertTrue("Default rows are 10" ,10 == defaultConfiguration.getRows());
-        Assert.assertTrue("Default Columns are 120" ,120 == defaultConfiguration.getMaxCell());
+        Assert.assertTrue("Default Columns are 12", 12 == defaultConfiguration.getColumns());
+        Assert.assertTrue("Default rows are 10", 10 == defaultConfiguration.getRows());
+        Assert.assertTrue("Default Columns are 120", 120 == defaultConfiguration.getMaxCell());
         Assert.assertTrue("No of players is 2", 2 == defaultConfiguration.getNoOfPlayers());
 
     }
 
     @Test
-    public void testCustomConfiguration(){
+    public void testCustomConfiguration() {
 
-        GameBoardImpl.GameConfigurationBuilder builder = new GameBoardImpl.GameConfigurationBuilder();
+        GameBoardImpl.GameBoardBuilder builder = new GameBoardImpl.GameBoardBuilder();
 
         builder.setNoOfPlayers(3);
         builder.setRows(10);
@@ -46,11 +46,11 @@ public class GameConfigurationTest {
         builder.addSnake(54, 34);
         builder.addSnake(62, 19);
 
-        GameBoardImpl configuration = builder.buildCongifuration();
+        GameBoardImpl configuration = builder.buildGame();
 
-        Assert.assertTrue("Config Columns are 12" ,12 == configuration.getColumns());
-        Assert.assertTrue("Config rows are 10" ,10 == configuration.getRows());
-        Assert.assertTrue("Total cells are 120" ,120 == configuration.getMaxCell());
+        Assert.assertTrue("Config Columns are 12", 12 == configuration.getColumns());
+        Assert.assertTrue("Config rows are 10", 10 == configuration.getRows());
+        Assert.assertTrue("Total cells are 120", 120 == configuration.getMaxCell());
         Assert.assertTrue("No of players is 3", 3 == configuration.getNoOfPlayers());
 
         Assert.assertTrue(14 == configuration.getLadderForCell(4));
@@ -73,10 +73,10 @@ public class GameConfigurationTest {
     @Test
     public void testInvalidConfiguration() throws Exception {
 
-        GameBoardImpl.GameConfigurationBuilder builder = new GameBoardImpl.GameConfigurationBuilder();
+        GameBoardImpl.GameBoardBuilder builder = new GameBoardImpl.GameBoardBuilder();
         try {
-            GameBoard configuration1 = builder.buildCongifuration();
-        }catch (IllegalStateException ex){
+            GameBoard configuration1 = builder.buildGame();
+        } catch (IllegalStateException ex) {
             Assert.assertTrue("Invalid configuration should throw an exception", true);
             return;
         }

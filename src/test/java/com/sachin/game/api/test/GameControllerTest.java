@@ -1,8 +1,8 @@
 package com.sachin.game.api.test;
 
+import com.sachin.game.api.GameBoard;
 import com.sachin.game.api.GameController;
 import com.sachin.game.api.Player;
-import com.sachin.game.api.GameBoard;
 import com.sachin.game.impl.GameBoardImpl;
 import com.sachin.game.impl.GameControllerImpl;
 import org.junit.Assert;
@@ -23,13 +23,13 @@ public class GameControllerTest {
     private GameController controller;
 
     @Before
-    public void setup(){
+    public void setup() {
         gameBoard = initGameConfiguration();
         controller = new GameControllerImpl(gameBoard);
     }
 
     @Test
-    public void testGetGameConfiguration(){
+    public void testGetGameConfiguration() {
 
         GameBoard conf = controller.getGameBoard();
 
@@ -37,7 +37,7 @@ public class GameControllerTest {
     }
 
     @Test
-    public void testGetPlayers(){
+    public void testGetPlayers() {
         List<Player> players = controller.getPlayers();
 
         Assert.assertNotNull(players);
@@ -45,23 +45,23 @@ public class GameControllerTest {
         Assert.assertEquals(players.size(), gameBoard.getNoOfPlayers());
 
         //All player should have current position 0 and no game history
-        for(Player player : players){
+        for (Player player : players) {
             Assert.assertNotNull(player.getName());
             Assert.assertEquals(player.getCurrentPosition(), 0);
-            Assert.assertEquals(player.getMoveHistory().size(),0);
+            Assert.assertEquals(player.getMoveHistory().size(), 0);
             Assert.assertEquals(player.isPlayerWon(), false);
         }
     }
 
     @Test
-    public void testGetRollDice(){
+    public void testGetRollDice() {
         int dice = controller.rollDice();
 
         Assert.assertTrue(dice > 0 && dice < 7);
     }
 
     @Test
-    public void testResetPlayers(){
+    public void testResetPlayers() {
         controller.resetPlayers();
 
         List<Player> players = controller.getPlayers();
@@ -71,16 +71,17 @@ public class GameControllerTest {
         Assert.assertEquals(players.size(), gameBoard.getNoOfPlayers());
 
         //All player should have current position 0 and no game history
-        for(Player player : players){
+        for (Player player : players) {
             Assert.assertNotNull(player.getName());
             Assert.assertEquals(player.getCurrentPosition(), 0);
-            Assert.assertEquals(player.getMoveHistory().size(),0);
+            Assert.assertEquals(player.getMoveHistory().size(), 0);
             Assert.assertEquals(player.isPlayerWon(), false);
         }
     }
+
     private GameBoardImpl initGameConfiguration() {
 
-        GameBoardImpl.GameConfigurationBuilder builder = new GameBoardImpl.GameConfigurationBuilder();
+        GameBoardImpl.GameBoardBuilder builder = new GameBoardImpl.GameBoardBuilder();
         builder.setColumns(10);
         builder.setRows(10);
         builder.setNoOfPlayers(2);
@@ -93,7 +94,7 @@ public class GameControllerTest {
         builder.addSnake(63, 32);
         builder.addSnake(84, 54);
 
-        return builder.buildCongifuration();
+        return builder.buildGame();
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -204,11 +205,11 @@ public class GameControllerTest {
             diceValArray.add(dice);
         }
         // frequency of any number should not be 4 or more than that in consecutive 6 attempts
-        Assert.assertFalse("frequency of any number should not be 4 or more than that in consecutive 6 attempts", Collections.frequency(diceValArray, Integer.valueOf(1)) >= 4);
-        Assert.assertFalse("frequency of any number should not be 4 or more than that in consecutive 6 attempts", Collections.frequency(diceValArray, Integer.valueOf(2)) >= 4);
-        Assert.assertFalse("frequency of any number should not be 4 or more than that in consecutive 6 attempts", Collections.frequency(diceValArray, Integer.valueOf(3)) >= 4);
-        Assert.assertFalse("frequency of any number should not be 4 or more than that in consecutive 6 attempts", Collections.frequency(diceValArray, Integer.valueOf(4)) >= 4);
-        Assert.assertFalse("frequency of any number should not be 4 or more than that in consecutive 6 attempts", Collections.frequency(diceValArray, Integer.valueOf(5)) >= 4);
-        Assert.assertFalse("frequency of any number should not be 4 or more than that in consecutive 6 attempts", Collections.frequency(diceValArray, Integer.valueOf(6)) >= 4);
+        Assert.assertFalse("frequency of any number should not be 5 or more than that in consecutive 6 attempts", Collections.frequency(diceValArray, Integer.valueOf(1)) >= 5);
+        Assert.assertFalse("frequency of any number should not be 5 or more than that in consecutive 6 attempts", Collections.frequency(diceValArray, Integer.valueOf(2)) >= 5);
+        Assert.assertFalse("frequency of any number should not be 5 or more than that in consecutive 6 attempts", Collections.frequency(diceValArray, Integer.valueOf(3)) >= 5);
+        Assert.assertFalse("frequency of any number should not be 5 or more than that in consecutive 6 attempts", Collections.frequency(diceValArray, Integer.valueOf(4)) >= 5);
+        Assert.assertFalse("frequency of any number should not be 5 or more than that in consecutive 6 attempts", Collections.frequency(diceValArray, Integer.valueOf(5)) >= 5);
+        Assert.assertFalse("frequency of any number should not be 5 or more than that in consecutive 6 attempts", Collections.frequency(diceValArray, Integer.valueOf(6)) >= 5);
     }
 }

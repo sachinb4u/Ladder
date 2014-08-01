@@ -2,15 +2,18 @@ package com.sachin.game.impl;
 
 import com.sachin.game.api.GameBoard;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.StringTokenizer;
 
 /**
  * Created by SachinBhosale on 7/11/2014.
- *
+ * <p/>
  * GameBoard contains Snake and Ladder Game configuration properties
- *
+ * <p/>
  * ImmutableClass
- *
+ * <p/>
  * Update 25/07/14: final removed for test stubbing
  */
 public class GameBoardImpl implements GameBoard {
@@ -54,15 +57,15 @@ public class GameBoardImpl implements GameBoard {
     }
 
     @Override
-    public int getLadderForCell(int cell){
+    public int getLadderForCell(int cell) {
 
-        return ladders.containsKey(cell) ?  ladders.get(cell) : -1 ;
+        return ladders.containsKey(cell) ? ladders.get(cell) : -1;
     }
 
     @Override
-    public int getSnakeForCell(int cell){
+    public int getSnakeForCell(int cell) {
 
-        return snakes.containsKey(cell) ?  snakes.get(cell) : -1 ;
+        return snakes.containsKey(cell) ? snakes.get(cell) : -1;
     }
 
     @Override
@@ -81,22 +84,22 @@ public class GameBoardImpl implements GameBoard {
         int ladder = getLadderForCell(cell);
         return ladder == -1 ? false : true;
     }
+
     /**
      * All GameBoard instances should come from GameConfigurationBuilder
      */
-    private GameBoardImpl(){
+    private GameBoardImpl() {
         // no default public constructor.
     }
 
     /**
      * Builder class for building GameBoard
-     *
      */
-    public static final class GameConfigurationBuilder {
+    public static final class GameBoardBuilder {
 
         private int rows;
         private int columns;
-        private Map<Integer, Integer> ladders = new HashMap<>();
+        private Map<Integer, Integer> ladders1 = new HashMap<>();
         private Map<Integer, Integer> snakes = new HashMap<>();
         private int noOfPlayers;
 
@@ -117,11 +120,11 @@ public class GameBoardImpl implements GameBoard {
         }
 
         public void removeLadder(int from, int to) {
-            this.ladders.remove(from);
+            this.ladders1.remove(from);
         }
 
         public void addLadder(int from, int to) {
-            this.ladders.put(from, to);
+            this.ladders1.put(from, to);
         }
 
         public void removeSnake(int from, int to) {
@@ -141,17 +144,34 @@ public class GameBoardImpl implements GameBoard {
         }
 
         /**
+         * Copy constructor
+         *
+         * @param builder
+         */
+        public GameBoardBuilder(GameBoardBuilder builder) {
+            this.rows = builder.rows;
+            this.columns = builder.columns;
+            this.ladders1 = new HashMap<>(builder.ladders1);
+            this.snakes = new HashMap<>(builder.snakes);
+            this.noOfPlayers = builder.noOfPlayers;
+        }
+
+        public GameBoardBuilder() {
+
+        }
+
+        /**
          * Get configuration building on GameConfigurationBuilder values
          *
-         * @throws java.lang.IllegalStateException
          * @return GameBoard
+         * @throws java.lang.IllegalStateException
          */
-        public GameBoardImpl buildCongifuration(){
+        public GameBoardImpl buildGame() {
             GameBoardImpl gameBoard = new GameBoardImpl();
 
             gameBoard.rows = this.rows;
             gameBoard.columns = this.columns;
-            gameBoard.ladders = new HashMap<>(ladders);
+            gameBoard.ladders = new HashMap<>(ladders1);
             gameBoard.snakes = new HashMap<>(snakes);
             gameBoard.maxCell = this.rows * this.columns;
             gameBoard.noOfPlayers = this.noOfPlayers;
@@ -164,20 +184,20 @@ public class GameBoardImpl implements GameBoard {
         /**
          * Get default configuration based on properties set in config.properties
          *
-         * @throws java.lang.IllegalStateException
          * @return GameBoard
+         * @throws java.lang.IllegalStateException
          */
-        public static GameBoardImpl getDefaultGameConfiguration(){
+        public static GameBoardImpl getDefaultGameConfiguration() {
 
-            GameConfigurationBuilder builder = new GameConfigurationBuilder();
+            GameBoardBuilder builder = new GameBoardBuilder();
 
             builder.setRows(Integer.parseInt(configBundle.getString(ConfigConstants.rows.name())));
             builder.setColumns(Integer.parseInt(configBundle.getString(ConfigConstants.columns.name())));
-            builder.ladders = getDefaultLadders();
+            builder.ladders1 = getDefaultLadders();
             builder.snakes = getDefaultSnakes();
             builder.setNoOfPlayers(Integer.parseInt(configBundle.getString(ConfigConstants.noOfPlayers.name())));
 
-            GameBoardImpl defaultGameBoard = builder.buildCongifuration();
+            GameBoardImpl defaultGameBoard = builder.buildGame();
 
             validateGameConfiguration(defaultGameBoard);
 
@@ -187,34 +207,41 @@ public class GameBoardImpl implements GameBoard {
         /**
          * Validate GameBoard before returning the instance.
          *
+         * @param board
          * @throws IllegalStateException
-         * @param configuration
          */
-        private static void validateGameConfiguration(GameBoardImpl configuration) {
-            if(configuration.rows < 1 || configuration.rows > 99){
+        private static void validateGameConfiguration(GameBoardImpl board) {
+            if (board.rows < 1 || board.rows > 99) {
                 throw new IllegalStateException("Rows number should be between 1 and 99");
             }
 
-            if(configuration.columns < 1 || configuration.columns > 99){
+            if (board.columns < 1 || board.columns > 99) {
                 throw new IllegalStateException("Columns number should be between 1 and 99");
             }
 
-            if(configuration.maxCell > 999){
+            if (board.maxCell > 999) {
                 throw new IllegalStateException("Cells greater than 999 are not supported");
             }
 
-            if(configuration.noOfPlayers > 5){
+            if (board.noOfPlayers > 5) {
                 throw new IllegalStateException("Game players more than 5 are not supported");
             }
 
-            if(configuration.ladders.keySet().contains(configuration.snakes.keySet())){
+            if (board.ladders.keySet().contains(board.snakes.keySet())) {
                 throw new IllegalStateException("Ladder and Snake cannot have at the same cell");
+            }
+
+            if (board.ladders.containsKey(0) || board.ladders.containsKey(board.columns * board.rows)) {
+                throw new IllegalStateException("Ladder cannot be present from initial cell and winning cell");
+            }
+            if (board.snakes.containsKey(0) || board.snakes.containsKey(board.columns * board.rows)) {
+                throw new IllegalStateException("Snake cannot be present from initial cell and winning cell");
             }
         }
 
 
         /**
-         * Read ladders property from config bundle
+         * Read ladders1 property from config bundle
          *
          * @return
          */
@@ -223,7 +250,7 @@ public class GameBoardImpl implements GameBoard {
             StringTokenizer tokenizer = new StringTokenizer(ladderString, ",");
             Map<Integer, Integer> ladderMap = new HashMap<Integer, Integer>();
 
-            while(tokenizer.hasMoreTokens()){
+            while (tokenizer.hasMoreTokens()) {
                 String token = tokenizer.nextToken();
                 String[] cells = token.split(":");
 
@@ -243,7 +270,7 @@ public class GameBoardImpl implements GameBoard {
             StringTokenizer tokenizer = new StringTokenizer(snakesStr, ",");
 
             Map<Integer, Integer> snakeMap = new HashMap<Integer, Integer>();
-            while(tokenizer.hasMoreTokens()){
+            while (tokenizer.hasMoreTokens()) {
                 String token = tokenizer.nextToken();
                 String[] cells = token.split(":");
 
@@ -259,7 +286,7 @@ public class GameBoardImpl implements GameBoard {
         return "GameBoard{" +
                 "rows=" + rows +
                 ", columns=" + columns +
-                ", ladders=" + ladders.values() +
+                ", ladders1=" + ladders.values() +
                 ", snakes=" + snakes.values() +
                 ", noOfPlayers=" + noOfPlayers +
                 ", maxCell=" + maxCell +

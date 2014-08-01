@@ -30,8 +30,9 @@ public class PlayerImpl implements Player {
         this.name = name;
     }
 
-    public PlayerImpl(GameController gameController){
+    public PlayerImpl(GameController gameController) {
         controller = gameController;
+        this.name = "Player1";
     }
 
     @Override
@@ -40,7 +41,7 @@ public class PlayerImpl implements Player {
 
         StringBuilder builder = new StringBuilder("f(").append(getCurrentPosition()).append(",").append(diceValue).append(")=").append(nextCell);
         lastMoves.add(builder.toString());
-
+//        System.out.println(builder.toString());
         currentPosition = nextCell;
         return nextCell;
     }
@@ -56,7 +57,8 @@ public class PlayerImpl implements Player {
         String lastMove = lastMoves.pop();
 
         String[] strArr = lastMove.split("=");
-        currentPosition = Integer.parseInt(strArr[1]);
+        String lastPosition = strArr[0].split(",")[0].substring(2);
+        currentPosition = Integer.parseInt(lastPosition);
     }
 
     @Override
@@ -64,11 +66,11 @@ public class PlayerImpl implements Player {
 
         List<String> history = new ArrayList<String>();
 
-        for(String gameMove : lastMoves){
+        for (String gameMove : lastMoves) {
             history.add(gameMove);
         }
 
-        return  history;
+        return history;
     }
 
     @Override

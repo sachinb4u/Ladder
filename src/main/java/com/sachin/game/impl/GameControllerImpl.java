@@ -1,8 +1,8 @@
 package com.sachin.game.impl;
 
+import com.sachin.game.api.GameBoard;
 import com.sachin.game.api.GameController;
 import com.sachin.game.api.Player;
-import com.sachin.game.api.GameBoard;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -33,8 +33,8 @@ public class GameControllerImpl implements GameController {
     @Override
     public List<Player> getPlayers() {
 
-        if(this.players == null) {
-           this.players = createNewPlayers();
+        if (this.players == null) {
+            this.players = createNewPlayers();
         }
         return this.players;
     }
@@ -46,7 +46,7 @@ public class GameControllerImpl implements GameController {
 
         for (int i = 0; i < noOfPlayers; i++) {
             Player gamePlayer = new PlayerImpl(this);
-            gamePlayer.setName("Player" + (i+1));
+            gamePlayer.setName("Player" + (i + 1));
             playersNew.add(gamePlayer);
         }
 
@@ -59,21 +59,21 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public int getNextMove(int currentCell, int diceValue){
-        if(diceValue < 1 || diceValue > 6){
+    public int getNextMove(int currentCell, int diceValue) {
+        if (diceValue < 1 || diceValue > 6) {
             throw new IllegalArgumentException("DiceValue cannot be greater than 6 and less than 1");
         }
 
         int nextCell = currentCell + diceValue;
 
 
-        if(gameBoard.isSnakeBite(nextCell)){
+        if (gameBoard.isSnakeBite(nextCell)) {
             int snake = gameBoard.getSnakeForCell(nextCell);
 
             nextCell = snake;
         }
 
-        if(gameBoard.isLadderJump(nextCell)){
+        if (gameBoard.isLadderJump(nextCell)) {
             int ladder = gameBoard.getLadderForCell(nextCell);
 
             nextCell = ladder;
@@ -82,7 +82,7 @@ public class GameControllerImpl implements GameController {
         /**
          * for winning exact number is required.
          */
-        if(nextCell > gameBoard.getMaxCell()){
+        if (nextCell > gameBoard.getMaxCell()) {
             return currentCell;
         }
 
@@ -100,9 +100,9 @@ public class GameControllerImpl implements GameController {
     @Override
     public int rollDice() {
         int randomInt;
-        do{
+        do {
             randomInt = random.nextInt(7);
-        }while (0 == randomInt);
+        } while (0 == randomInt);
 
         return randomInt;
     }

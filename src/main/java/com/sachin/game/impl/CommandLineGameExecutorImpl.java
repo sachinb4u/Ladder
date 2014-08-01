@@ -19,14 +19,14 @@ public class CommandLineGameExecutorImpl implements GameExecutor {
         /**
          * Get / Build Game Configuration
          */
-        GameBoardImpl configuration = GameBoardImpl.GameConfigurationBuilder.getDefaultGameConfiguration();
+        GameBoardImpl configuration = GameBoardImpl.GameBoardBuilder.getDefaultGameConfiguration();
 
         /**
          * Get the GameController to run the game
          */
         GameController controller = new GameControllerImpl(configuration);
 
-        do{
+        do {
             showUserMessage("Let's start a game.");
 
             /**
@@ -46,14 +46,14 @@ public class CommandLineGameExecutorImpl implements GameExecutor {
              * roll the dice and go to next cell
              * Each player gets his turn in round robin manner
              */
-            while(!isPlayerWonInRoundRobinPlay(controller, players));
+            while (!isPlayerWonInRoundRobinPlay(controller, players)) ;
 
             showUserMessage("Game Summary !!");
 
             /**
              * Show summary of each player's game
              */
-            for(Player player : players){
+            for (Player player : players) {
                 showUserMessage("Player : " + player.getName() + "'s Game History: ##");
                 showUserMessage(player.getMoveHistory().toString());
             }
@@ -61,15 +61,16 @@ public class CommandLineGameExecutorImpl implements GameExecutor {
             showUserMessage("GameSetup : " + configuration.toString());
             showUserMessage("Play New Game ?? ( Yes / No ) ");
 
-        }while(scanner.next().matches("[yY][\\w]*"));
+        } while (scanner.next().matches("[yY][\\w]*"));
     }
 
     /**
      * Get Names for players and set it
+     *
      * @param players
      */
     private void getNamesForPlayer(List<Player> players) {
-        for(Player player : players){
+        for (Player player : players) {
             showUserMessage("Enter name for " + player.getName());
             String name = getUserInput();
             player.setName(name);
@@ -77,13 +78,12 @@ public class CommandLineGameExecutorImpl implements GameExecutor {
     }
 
     /**
-     *
      * @param controller
      * @param players
      * @return flag if any player wins
      */
     private boolean isPlayerWonInRoundRobinPlay(GameController controller, List<Player> players) {
-        for(Player player : players){
+        for (Player player : players) {
             /**
              * Show current Position
              */
@@ -108,7 +108,7 @@ public class CommandLineGameExecutorImpl implements GameExecutor {
             /**
              * Show a message if player wins
              */
-            if(player.isPlayerWon()){
+            if (player.isPlayerWon()) {
                 showUserMessage("Congratulations " + player.getName() + "! You won !! ");
                 return true;
             }
@@ -132,17 +132,17 @@ public class CommandLineGameExecutorImpl implements GameExecutor {
     }
 
 
-    private static String getUserInput(){
+    private static String getUserInput() {
         String input = scanner.next();
 
-        if("quit".equalsIgnoreCase(input)){
+        if ("quit".equalsIgnoreCase(input)) {
             System.exit(0);
         }
 
         return input;
     }
 
-    private static void showUserMessage(String str){
+    private static void showUserMessage(String str) {
         System.out.println(str);
     }
 }

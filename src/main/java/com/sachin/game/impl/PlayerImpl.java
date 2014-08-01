@@ -13,12 +13,14 @@ import java.util.Stack;
 public class PlayerImpl implements Player {
 
     private final GameController controller;
-
-    private int currentPosition;
-
     private final Stack<String> lastMoves = new Stack<String>();
-
+    private int currentPosition;
     private String name;
+
+    public PlayerImpl(GameController gameController) {
+        controller = gameController;
+        this.name = "Player1";
+    }
 
     @Override
     public String getName() {
@@ -28,11 +30,6 @@ public class PlayerImpl implements Player {
     @Override
     public void setName(String name) {
         this.name = name;
-    }
-
-    public PlayerImpl(GameController gameController) {
-        controller = gameController;
-        this.name = "Player1";
     }
 
     @Override

@@ -7,11 +7,9 @@ import com.sachin.game.impl.GameBoardImpl;
 import com.sachin.game.impl.GameControllerImpl;
 import com.sachin.game.impl.PlayerImpl;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 /**
  * Created by C5203803 on 7/31/2014.
@@ -32,7 +30,7 @@ public class SnakeNLadderTest {
         builder.addSnake(54, 34);
         builder.addSnake(62, 19);
 
-        return  builder;
+        return builder;
     }
 
     @Test
@@ -412,7 +410,7 @@ public class SnakeNLadderTest {
     }
 
     @Test
-    public void testPlayer_winWithExactNumber(){
+    public void testPlayer_winWithExactNumber() {
         GameBoardImpl.GameBoardBuilder builder1 = new GameBoardImpl.GameBoardBuilder();
         builder1.setColumns(10);
         builder1.setRows(10);
@@ -448,7 +446,7 @@ public class SnakeNLadderTest {
     }
 
     @Test
-    public void testPlayer_undoMove(){
+    public void testPlayer_undoMove() {
         GameBoardImpl.GameBoardBuilder builder1 = new GameBoardImpl.GameBoardBuilder();
         builder1.setColumns(10);
         builder1.setRows(10);

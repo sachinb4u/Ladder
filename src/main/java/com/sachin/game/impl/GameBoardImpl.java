@@ -19,17 +19,18 @@ import java.util.StringTokenizer;
 public class GameBoardImpl implements GameBoard {
 
     private static final ResourceBundle configBundle = ResourceBundle.getBundle("config");
-
-    public enum ConfigConstants {
-        rows, columns, ladders, snakes, noOfPlayers
-    }
-
     private int rows;
     private int columns;
     private Map<Integer, Integer> ladders;
     private Map<Integer, Integer> snakes;
     private int noOfPlayers;
     private int maxCell;
+    /**
+     * All GameBoard instances should come from GameConfigurationBuilder
+     */
+    private GameBoardImpl() {
+        // no default public constructor.
+    }
 
     @Override
     public int getRows() {
@@ -85,11 +86,20 @@ public class GameBoardImpl implements GameBoard {
         return ladder == -1 ? false : true;
     }
 
-    /**
-     * All GameBoard instances should come from GameConfigurationBuilder
-     */
-    private GameBoardImpl() {
-        // no default public constructor.
+    @Override
+    public String toString() {
+        return "GameBoard{" +
+                "rows=" + rows +
+                ", columns=" + columns +
+                ", ladders1=" + ladders.values() +
+                ", snakes=" + snakes.values() +
+                ", noOfPlayers=" + noOfPlayers +
+                ", maxCell=" + maxCell +
+                '}';
+    }
+
+    public enum ConfigConstants {
+        rows, columns, ladders, snakes, noOfPlayers
     }
 
     /**
@@ -102,46 +112,6 @@ public class GameBoardImpl implements GameBoard {
         private Map<Integer, Integer> ladders1 = new HashMap<>();
         private Map<Integer, Integer> snakes = new HashMap<>();
         private int noOfPlayers;
-
-        public int getRows() {
-            return rows;
-        }
-
-        public void setRows(int rows) {
-            this.rows = rows;
-        }
-
-        public int getColumns() {
-            return columns;
-        }
-
-        public void setColumns(int columns) {
-            this.columns = columns;
-        }
-
-        public void removeLadder(int from, int to) {
-            this.ladders1.remove(from);
-        }
-
-        public void addLadder(int from, int to) {
-            this.ladders1.put(from, to);
-        }
-
-        public void removeSnake(int from, int to) {
-            snakes.remove(from);
-        }
-
-        public void addSnake(int from, int to) {
-            this.snakes.put(from, to);
-        }
-
-        public int getNoOfPlayers() {
-            return noOfPlayers;
-        }
-
-        public void setNoOfPlayers(int noOfPlayers) {
-            this.noOfPlayers = noOfPlayers;
-        }
 
         /**
          * Copy constructor
@@ -158,27 +128,6 @@ public class GameBoardImpl implements GameBoard {
 
         public GameBoardBuilder() {
 
-        }
-
-        /**
-         * Get configuration building on GameConfigurationBuilder values
-         *
-         * @return GameBoard
-         * @throws java.lang.IllegalStateException
-         */
-        public GameBoardImpl buildGame() {
-            GameBoardImpl gameBoard = new GameBoardImpl();
-
-            gameBoard.rows = this.rows;
-            gameBoard.columns = this.columns;
-            gameBoard.ladders = new HashMap<>(ladders1);
-            gameBoard.snakes = new HashMap<>(snakes);
-            gameBoard.maxCell = this.rows * this.columns;
-            gameBoard.noOfPlayers = this.noOfPlayers;
-
-            validateGameConfiguration(gameBoard);
-
-            return gameBoard;
         }
 
         /**
@@ -239,7 +188,6 @@ public class GameBoardImpl implements GameBoard {
             }
         }
 
-
         /**
          * Read ladders1 property from config bundle
          *
@@ -278,18 +226,66 @@ public class GameBoardImpl implements GameBoard {
             }
             return snakeMap;
         }
-    }
 
+        public int getRows() {
+            return rows;
+        }
 
-    @Override
-    public String toString() {
-        return "GameBoard{" +
-                "rows=" + rows +
-                ", columns=" + columns +
-                ", ladders1=" + ladders.values() +
-                ", snakes=" + snakes.values() +
-                ", noOfPlayers=" + noOfPlayers +
-                ", maxCell=" + maxCell +
-                '}';
+        public void setRows(int rows) {
+            this.rows = rows;
+        }
+
+        public int getColumns() {
+            return columns;
+        }
+
+        public void setColumns(int columns) {
+            this.columns = columns;
+        }
+
+        public void removeLadder(int from, int to) {
+            this.ladders1.remove(from);
+        }
+
+        public void addLadder(int from, int to) {
+            this.ladders1.put(from, to);
+        }
+
+        public void removeSnake(int from, int to) {
+            snakes.remove(from);
+        }
+
+        public void addSnake(int from, int to) {
+            this.snakes.put(from, to);
+        }
+
+        public int getNoOfPlayers() {
+            return noOfPlayers;
+        }
+
+        public void setNoOfPlayers(int noOfPlayers) {
+            this.noOfPlayers = noOfPlayers;
+        }
+
+        /**
+         * Get configuration building on GameConfigurationBuilder values
+         *
+         * @return GameBoard
+         * @throws java.lang.IllegalStateException
+         */
+        public GameBoardImpl buildGame() {
+            GameBoardImpl gameBoard = new GameBoardImpl();
+
+            gameBoard.rows = this.rows;
+            gameBoard.columns = this.columns;
+            gameBoard.ladders = new HashMap<>(ladders1);
+            gameBoard.snakes = new HashMap<>(snakes);
+            gameBoard.maxCell = this.rows * this.columns;
+            gameBoard.noOfPlayers = this.noOfPlayers;
+
+            validateGameConfiguration(gameBoard);
+
+            return gameBoard;
+        }
     }
 }

@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class GameControllerImpl implements GameController {
 
+    private static final SecureRandom random = new SecureRandom();
     private final GameBoard gameBoard;
     private List<Player> players;
 
@@ -88,8 +89,6 @@ public class GameControllerImpl implements GameController {
 
         return nextCell;
     }
-
-    private static final SecureRandom random = new SecureRandom();
 
     /**
      * Returns a pseudorandom, uniformly distributed {@code int} value

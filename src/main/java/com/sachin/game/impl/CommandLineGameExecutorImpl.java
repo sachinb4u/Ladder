@@ -14,6 +14,20 @@ public class CommandLineGameExecutorImpl implements GameExecutor {
 
     private static final Scanner scanner = new Scanner(System.in);
 
+    private static String getUserInput() {
+        String input = scanner.next();
+
+        if ("quit".equalsIgnoreCase(input)) {
+            System.exit(0);
+        }
+
+        return input;
+    }
+
+    private static void showUserMessage(String str) {
+        System.out.println(str);
+    }
+
     @Override
     public void executeGame() {
         /**
@@ -129,20 +143,5 @@ public class CommandLineGameExecutorImpl implements GameExecutor {
     @Override
     public void endGame() {
 
-    }
-
-
-    private static String getUserInput() {
-        String input = scanner.next();
-
-        if ("quit".equalsIgnoreCase(input)) {
-            System.exit(0);
-        }
-
-        return input;
-    }
-
-    private static void showUserMessage(String str) {
-        System.out.println(str);
     }
 }

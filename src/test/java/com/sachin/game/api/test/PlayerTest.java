@@ -1,9 +1,8 @@
 package com.sachin.game.api.test;
 
-import com.sachin.game.api.GameBoard;
-import com.sachin.game.api.GameController;
-import com.sachin.game.api.Player;
-import com.sachin.game.impl.PlayerImpl;
+import com.sachin.game.GameBoard;
+import com.sachin.game.GameController;
+import com.sachin.game.Player;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +32,7 @@ public class PlayerTest {
 
         Assert.assertNotNull(controller);
 
-        player = new PlayerImpl(controller);
+        player = new Player(controller);
 
         // Create spy
         player = spy(player);
@@ -82,10 +81,6 @@ public class PlayerTest {
         Assert.assertEquals(expected, actual);
         // Game Move should be added in move hisotory
         Assert.assertEquals(actual, player.getCurrentPosition());
-        Assert.assertNotNull(player.getMoveHistory());
-        System.out.println(player.getMoveHistory());
-        Assert.assertTrue(player.getMoveHistory().size() > 0);
-
     }
 
     @Test
@@ -104,14 +99,9 @@ public class PlayerTest {
         int res = 7;
         when(controller.getNextMove(anyInt(), anyInt())).thenReturn(res);
         when(player.getCurrentPosition()).thenReturn(current).thenReturn(current).thenCallRealMethod();
-        when(player.getMoveHistory()).thenCallRealMethod();
 
         player.playMove(5);
 
-        List<String> moveList = player.getMoveHistory();
-//        System.out.println(moveList);
-        Assert.assertNotNull(moveList);
-        Assert.assertTrue(moveList.size() > 0);
     }
 
     @Test

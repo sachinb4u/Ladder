@@ -1,8 +1,4 @@
-package com.sachin.game.impl;
-
-import com.sachin.game.api.GameController;
-import com.sachin.game.api.GameExecutor;
-import com.sachin.game.api.Player;
+package com.sachin.game;
 
 import java.util.List;
 import java.util.Scanner;
@@ -10,10 +6,14 @@ import java.util.Scanner;
 /**
  * Created by SachinBhosale on 7/13/2014.
  */
-public class CommandLineGameExecutorImpl implements GameExecutor {
+public class GameExecutor {
 
     private static final Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Get user input from commandline
+     * @return {String}
+     */
     private static String getUserInput() {
         String input = scanner.next();
 
@@ -24,21 +24,28 @@ public class CommandLineGameExecutorImpl implements GameExecutor {
         return input;
     }
 
+    /**
+     * Print Message on command line
+     *
+     * @param str
+     */
     private static void showUserMessage(String str) {
         System.out.println(str);
     }
 
-    @Override
+    /**
+     * Run the show
+     */
     public void executeGame() {
         /**
          * Get / Build Game Configuration
          */
-        GameBoardImpl configuration = GameBoardImpl.GameBoardBuilder.getDefaultGameConfiguration();
+        GameBoard configuration = GameBoard.GameBoardBuilder.getDefaultGameConfiguration();
 
         /**
          * Get the GameController to run the game
          */
-        GameController controller = new GameControllerImpl(configuration);
+        GameController controller = new GameController(configuration);
 
         do {
             showUserMessage("Let's start a game.");
@@ -69,7 +76,6 @@ public class CommandLineGameExecutorImpl implements GameExecutor {
              */
             for (Player player : players) {
                 showUserMessage("Player : " + player.getName() + "'s Game History: ##");
-                showUserMessage(player.getMoveHistory().toString());
             }
 
             showUserMessage("GameSetup : " + configuration.toString());
@@ -130,18 +136,4 @@ public class CommandLineGameExecutorImpl implements GameExecutor {
         return false;
     }
 
-    @Override
-    public void saveGame() {
-
-    }
-
-    @Override
-    public void loadGame() {
-
-    }
-
-    @Override
-    public void endGame() {
-
-    }
 }

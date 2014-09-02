@@ -1,10 +1,8 @@
 package com.sachin.game.api.test;
 
-import com.sachin.game.api.GameBoard;
-import com.sachin.game.api.GameController;
-import com.sachin.game.api.Player;
-import com.sachin.game.impl.GameBoardImpl;
-import com.sachin.game.impl.GameControllerImpl;
+import com.sachin.game.GameController;
+import com.sachin.game.Player;
+import com.sachin.game.GameBoard;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,14 +16,14 @@ import java.util.List;
  */
 public class GameControllerTest {
 
-    private GameBoardImpl gameBoard;
+    private GameBoard gameBoard;
 
     private GameController controller;
 
     @Before
     public void setup() {
         gameBoard = initGameConfiguration();
-        controller = new GameControllerImpl(gameBoard);
+        controller = new GameController(gameBoard);
     }
 
     @Test
@@ -48,7 +46,6 @@ public class GameControllerTest {
         for (Player player : players) {
             Assert.assertNotNull(player.getName());
             Assert.assertEquals(player.getCurrentPosition(), 0);
-            Assert.assertEquals(player.getMoveHistory().size(), 0);
             Assert.assertEquals(player.isPlayerWon(), false);
         }
     }
@@ -74,14 +71,13 @@ public class GameControllerTest {
         for (Player player : players) {
             Assert.assertNotNull(player.getName());
             Assert.assertEquals(player.getCurrentPosition(), 0);
-            Assert.assertEquals(player.getMoveHistory().size(), 0);
             Assert.assertEquals(player.isPlayerWon(), false);
         }
     }
 
-    private GameBoardImpl initGameConfiguration() {
+    private GameBoard initGameConfiguration() {
 
-        GameBoardImpl.GameBoardBuilder builder = new GameBoardImpl.GameBoardBuilder();
+        GameBoard.GameBoardBuilder builder = new GameBoard.GameBoardBuilder();
         builder.setColumns(10);
         builder.setRows(10);
         builder.setNoOfPlayers(2);
@@ -97,7 +93,7 @@ public class GameControllerTest {
         return builder.buildGame();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = AssertionError.class)
     public void tesGetNextMoveInvalidDiceValue() {
         // invalid Dice value should throw IllegalArgumentException
         controller.getNextMove(11, 8);

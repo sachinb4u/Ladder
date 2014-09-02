@@ -1,7 +1,6 @@
 package com.sachin.game.api.test;
 
-import com.sachin.game.api.GameBoard;
-import com.sachin.game.impl.GameBoardImpl;
+import com.sachin.game.GameBoard;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,12 +10,12 @@ import org.junit.Test;
  */
 public class GameConfigurationTest {
 
-    private GameBoardImpl defaultConfiguration;
+    private GameBoard defaultConfiguration;
 
 
     @Before
     public void setUp() throws Exception {
-        defaultConfiguration = GameBoardImpl.GameBoardBuilder.getDefaultGameConfiguration();
+        defaultConfiguration = GameBoard.GameBoardBuilder.getDefaultGameConfiguration();
     }
 
     @Test
@@ -32,7 +31,7 @@ public class GameConfigurationTest {
     @Test
     public void testCustomConfiguration() {
 
-        GameBoardImpl.GameBoardBuilder builder = new GameBoardImpl.GameBoardBuilder();
+        GameBoard.GameBoardBuilder builder = new GameBoard.GameBoardBuilder();
 
         builder.setNoOfPlayers(3);
         builder.setRows(10);
@@ -46,7 +45,7 @@ public class GameConfigurationTest {
         builder.addSnake(54, 34);
         builder.addSnake(62, 19);
 
-        GameBoardImpl configuration = builder.buildGame();
+        GameBoard configuration = builder.buildGame();
 
         Assert.assertTrue("Config Columns are 12", 12 == configuration.getColumns());
         Assert.assertTrue("Config rows are 10", 10 == configuration.getRows());
@@ -73,7 +72,7 @@ public class GameConfigurationTest {
     @Test
     public void testInvalidConfiguration() throws Exception {
 
-        GameBoardImpl.GameBoardBuilder builder = new GameBoardImpl.GameBoardBuilder();
+        GameBoard.GameBoardBuilder builder = new GameBoard.GameBoardBuilder();
         try {
             GameBoard configuration1 = builder.buildGame();
         } catch (IllegalStateException ex) {

@@ -1,8 +1,4 @@
-package com.sachin.game.impl;
-
-import com.sachin.game.api.GameBoard;
-import com.sachin.game.api.GameController;
-import com.sachin.game.api.Player;
+package com.sachin.game;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -11,42 +7,55 @@ import java.util.List;
 /**
  * Created by SachinBhosale on 7/12/2014.
  */
-public class GameControllerImpl implements GameController {
+public class GameController {
 
     private static final SecureRandom random = new SecureRandom();
     private final GameBoard gameBoard;
     private List<Player> players;
 
-    public GameControllerImpl(GameBoard configuration) {
-        this.gameBoard = configuration;
+    /**
+     * Initialize GameController for GameBoard
+     *
+     * @param gameBoard
+     */
+    public GameController(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
     }
 
-    @Override
+    /**
+     * Get GameBoard
+     *
+     * @return
+     */
     public GameBoard getGameBoard() {
         return this.gameBoard;
     }
 
-    @Override
-    public void displayBoard() {
-
-    }
-
-    @Override
+    /**
+     * Get the players of the game with default names
+     *
+     * @return players
+     */
     public List<Player> getPlayers() {
-
         if (this.players == null) {
             this.players = createNewPlayers();
         }
         return this.players;
     }
 
+    /**
+     * Create new Players with default name and initial state
+     * and as per GameBoard configuration
+     *
+     * @return players
+     */
     private List<Player> createNewPlayers() {
         int noOfPlayers = gameBoard.getNoOfPlayers();
 
-        List<Player> playersNew = new ArrayList<Player>();
+        List<Player> playersNew = new ArrayList<>();
 
         for (int i = 0; i < noOfPlayers; i++) {
-            Player gamePlayer = new PlayerImpl(this);
+            Player gamePlayer = new Player(this);
             gamePlayer.setName("Player" + (i + 1));
             playersNew.add(gamePlayer);
         }
@@ -54,29 +63,32 @@ public class GameControllerImpl implements GameController {
         return playersNew;
     }
 
-    @Override
+    /**
+     * Reset player state to initial position
+     */
     public void resetPlayers() {
         this.players = createNewPlayers();
     }
 
-    @Override
+    /**
+     * Get the next cell number based on current position and dicevalue
+     *
+     * @param currentCell
+     * @param diceValue
+     * @return nextCell
+     */
     public int getNextMove(int currentCell, int diceValue) {
-        if (diceValue < 1 || diceValue > 6) {
-            throw new IllegalArgumentException("DiceValue cannot be greater than 6 and less than 1");
-        }
+        assert (diceValue > 0  && diceValue < 7) : "Invalid DiceValue";
 
         int nextCell = currentCell + diceValue;
 
-
         if (gameBoard.isSnakeBite(nextCell)) {
             int snake = gameBoard.getSnakeForCell(nextCell);
-
             nextCell = snake;
         }
 
         if (gameBoard.isLadderJump(nextCell)) {
             int ladder = gameBoard.getLadderForCell(nextCell);
-
             nextCell = ladder;
         }
 
@@ -96,7 +108,6 @@ public class GameControllerImpl implements GameController {
      *
      * @return int
      */
-    @Override
     public int rollDice() {
         int randomInt;
         do {

@@ -1,6 +1,4 @@
-package com.sachin.game.impl;
-
-import com.sachin.game.api.GameBoard;
+package com.sachin.game;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,77 +14,67 @@ import java.util.StringTokenizer;
  * <p/>
  * Update 25/07/14: final removed for test stubbing
  */
-public class GameBoardImpl implements GameBoard {
+public class GameBoard {
 
     private static final ResourceBundle configBundle = ResourceBundle.getBundle("config");
+
     private int rows;
     private int columns;
     private Map<Integer, Integer> ladders;
     private Map<Integer, Integer> snakes;
     private int noOfPlayers;
     private int maxCell;
+
     /**
-     * All GameBoard instances should come from GameConfigurationBuilder
+     * All GameBoard instances should come from GameBoardBuilder
      */
-    private GameBoardImpl() {
+    private GameBoard() {
         // no default public constructor.
     }
 
-    @Override
     public int getRows() {
         return rows;
     }
 
-    @Override
     public int getColumns() {
         return columns;
     }
 
-    @Override
     public Map<Integer, Integer> getLadders() {
         return ladders;
     }
 
-    @Override
     public Map<Integer, Integer> getSnakes() {
         return snakes;
     }
 
-    @Override
     public int getNoOfPlayers() {
         return noOfPlayers;
     }
 
-    @Override
     public int getLadderForCell(int cell) {
-
         return ladders.containsKey(cell) ? ladders.get(cell) : -1;
     }
 
-    @Override
     public int getSnakeForCell(int cell) {
 
         return snakes.containsKey(cell) ? snakes.get(cell) : -1;
     }
 
-    @Override
     public int getMaxCell() {
         return maxCell;
     }
 
-    @Override
     public boolean isSnakeBite(int cell) {
         int snake = getSnakeForCell(cell);
         return snake == -1 ? false : true;
     }
 
-    @Override
     public boolean isLadderJump(int cell) {
         int ladder = getLadderForCell(cell);
         return ladder == -1 ? false : true;
     }
 
-    @Override
     public String toString() {
         return "GameBoard{" +
                 "rows=" + rows +
@@ -136,7 +124,7 @@ public class GameBoardImpl implements GameBoard {
          * @return GameBoard
          * @throws java.lang.IllegalStateException
          */
-        public static GameBoardImpl getDefaultGameConfiguration() {
+        public static GameBoard getDefaultGameConfiguration() {
 
             GameBoardBuilder builder = new GameBoardBuilder();
 
@@ -146,7 +134,7 @@ public class GameBoardImpl implements GameBoard {
             builder.snakes = getDefaultSnakes();
             builder.setNoOfPlayers(Integer.parseInt(configBundle.getString(ConfigConstants.noOfPlayers.name())));
 
-            GameBoardImpl defaultGameBoard = builder.buildGame();
+            GameBoard defaultGameBoard = builder.buildGame();
 
             validateGameConfiguration(defaultGameBoard);
 
@@ -159,7 +147,7 @@ public class GameBoardImpl implements GameBoard {
          * @param board
          * @throws IllegalStateException
          */
-        private static void validateGameConfiguration(GameBoardImpl board) {
+        private static void validateGameConfiguration(GameBoard board) {
             if (board.rows < 1 || board.rows > 99) {
                 throw new IllegalStateException("Rows number should be between 1 and 99");
             }
@@ -273,8 +261,8 @@ public class GameBoardImpl implements GameBoard {
          * @return GameBoard
          * @throws java.lang.IllegalStateException
          */
-        public GameBoardImpl buildGame() {
-            GameBoardImpl gameBoard = new GameBoardImpl();
+        public GameBoard buildGame() {
+            GameBoard gameBoard = new GameBoard();
 
             gameBoard.rows = this.rows;
             gameBoard.columns = this.columns;

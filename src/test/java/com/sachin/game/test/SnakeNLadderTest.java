@@ -1,11 +1,8 @@
 package com.sachin.game.test;
 
-import com.sachin.game.api.GameBoard;
-import com.sachin.game.api.GameController;
-import com.sachin.game.api.Player;
-import com.sachin.game.impl.GameBoardImpl;
-import com.sachin.game.impl.GameControllerImpl;
-import com.sachin.game.impl.PlayerImpl;
+import com.sachin.game.GameBoard;
+import com.sachin.game.GameController;
+import com.sachin.game.Player;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,8 +13,8 @@ import static org.junit.Assert.*;
  */
 public class SnakeNLadderTest {
 
-    private GameBoardImpl.GameBoardBuilder initGame() {
-        GameBoardImpl.GameBoardBuilder builder = new GameBoardImpl.GameBoardBuilder();
+    private GameBoard.GameBoardBuilder initGame() {
+        GameBoard.GameBoardBuilder builder = new GameBoard.GameBoardBuilder();
         builder.setColumns(10);
         builder.setRows(12);
         builder.setNoOfPlayers(3);
@@ -35,7 +32,7 @@ public class SnakeNLadderTest {
 
     @Test
     public void testGameBoard() {
-        GameBoardImpl.GameBoardBuilder builder1 = new GameBoardImpl.GameBoardBuilder(initGame());
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder(initGame());
         GameBoard board1 = builder1.buildGame();
 
         assertEquals(10, board1.getColumns());
@@ -45,7 +42,7 @@ public class SnakeNLadderTest {
 
     @Test
     public void testGameBoard_Ladders() {
-        GameBoardImpl.GameBoardBuilder builder1 = new GameBoardImpl.GameBoardBuilder(initGame());
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder(initGame());
         GameBoard board1 = builder1.buildGame();
 
         assertNotNull(board1.getLadders());
@@ -62,7 +59,7 @@ public class SnakeNLadderTest {
     @Test
     public void testGameBoard_Snakes() {
 
-        GameBoardImpl.GameBoardBuilder builder1 = new GameBoardImpl.GameBoardBuilder(initGame());
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder(initGame());
         GameBoard board1 = builder1.buildGame();
 
         assertNotNull(board1.getSnakes());
@@ -81,7 +78,7 @@ public class SnakeNLadderTest {
      */
     @Test(expected = IllegalStateException.class)
     public void testGameBoard_LadderValidation1() {
-        GameBoardImpl.GameBoardBuilder builder1 = new GameBoardImpl.GameBoardBuilder(initGame());
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder(initGame());
         builder1.addLadder(0, 100);
 
         GameBoard board1 = builder1.buildGame();
@@ -92,7 +89,7 @@ public class SnakeNLadderTest {
      */
     @Test(expected = IllegalStateException.class)
     public void testGameBoard_LadderValidation2() {
-        GameBoardImpl.GameBoardBuilder builder1 = new GameBoardImpl.GameBoardBuilder(initGame());
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder(initGame());
         builder1.addLadder(120, 120);
 
         GameBoard board1 = builder1.buildGame();
@@ -103,7 +100,7 @@ public class SnakeNLadderTest {
      */
     @Test(expected = IllegalStateException.class)
     public void testGameBoard_SnakeValidation1() {
-        GameBoardImpl.GameBoardBuilder builder1 = new GameBoardImpl.GameBoardBuilder(initGame());
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder(initGame());
         builder1.addSnake(0, 0);
 
         GameBoard board1 = builder1.buildGame();
@@ -114,7 +111,7 @@ public class SnakeNLadderTest {
      */
     @Test(expected = IllegalStateException.class)
     public void testGameBoard_SnakeValidation2() {
-        GameBoardImpl.GameBoardBuilder builder1 = new GameBoardImpl.GameBoardBuilder(initGame());
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder(initGame());
         builder1.addSnake(120, 4);
 
         GameBoard board1 = builder1.buildGame();
@@ -125,7 +122,7 @@ public class SnakeNLadderTest {
      */
 /*    @Test(expected = IllegalStateException.class)
     public void testGameBoard_LadderSnakeAtSameCell(){
-        GameBoardImpl.GameBoardBuilder builder1 = new GameBoardImpl.GameBoardBuilder(builder);
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder(builder);
         builder1.addSnake(33, 17);
         builder1.addLadder(33, 74);
 
@@ -134,7 +131,7 @@ public class SnakeNLadderTest {
     @Test
     public void testGameController() {
         GameBoard board = initGame().buildGame();
-        GameController controller = new GameControllerImpl(board);
+        GameController controller = new GameController(board);
         assertEquals(controller.getGameBoard(), board);
         assertEquals(controller.getPlayers().size(), board.getNoOfPlayers());
     }
@@ -142,7 +139,7 @@ public class SnakeNLadderTest {
     @Test
     public void testRollDiceValidValue() {
         GameBoard board = initGame().buildGame();
-        GameController controller = new GameControllerImpl(board);
+        GameController controller = new GameController(board);
         int dice = controller.rollDice();
         Assert.assertTrue(dice > 0 && dice < 7);
     }
@@ -150,20 +147,19 @@ public class SnakeNLadderTest {
     @Test
     public void testPlayer() {
         GameBoard board = initGame().buildGame();
-        GameController controller = new GameControllerImpl(board);
-        Player player = new PlayerImpl(controller);
+        GameController controller = new GameController(board);
+        Player player = new Player(controller);
 
         assertEquals("Default name should be Player1", player.getName(), "Player1");
         assertEquals("Initial position should be 0", player.getCurrentPosition(), 0);
-        assertTrue("No move history present at start", player.getMoveHistory().isEmpty());
         assertFalse("Player winning flag should be fals", player.isPlayerWon());
     }
 
     @Test
     public void testPlayer_nameSet() {
         GameBoard board = initGame().buildGame();
-        GameController controller = new GameControllerImpl(board);
-        Player player = new PlayerImpl(controller);
+        GameController controller = new GameController(board);
+        Player player = new Player(controller);
 
         player.setName("Master");
 
@@ -174,22 +170,20 @@ public class SnakeNLadderTest {
     @Test
     public void testPlayer_playMove() {
         GameBoard board = initGame().buildGame();
-        GameController controller = new GameControllerImpl(board);
-        Player player = new PlayerImpl(controller);
+        GameController controller = new GameController(board);
+        Player player = new Player(controller);
 
         player.playMove(3);
 
         assertEquals("CurrentPosition should be 3", player.getCurrentPosition(), 3);
-        assertFalse("MOve history should not be empty", player.getMoveHistory().isEmpty());
-        assertNotNull("Last move cannot be null", player.getMoveHistory().get(0));
-        assertEquals("Last move should be f(0,3)=3 ", "f(0,3)=3", player.getMoveHistory().get(0));
+
     }
 
 
     @Test
     public void testPlayer_playMove_winWithLadders() {
 
-        GameBoardImpl.GameBoardBuilder builder1 = new GameBoardImpl.GameBoardBuilder();
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder();
         builder1.setColumns(10);
         builder1.setRows(10);
         builder1.setNoOfPlayers(3);
@@ -201,9 +195,9 @@ public class SnakeNLadderTest {
         builder1.addLadder(87, 97);
 
         GameBoard board1 = builder1.buildGame();
-        GameController controller1 = new GameControllerImpl(board1);
+        GameController controller1 = new GameController(board1);
 
-        Player player1 = new PlayerImpl(controller1);
+        Player player1 = new Player(controller1);
         player1.playMove(3);
         player1.playMove(1);
         player1.playMove(6);
@@ -212,17 +206,13 @@ public class SnakeNLadderTest {
         player1.playMove(3);
 
         assertEquals("CurrentPosition should be 100", player1.getCurrentPosition(), 100);
-        assertFalse("Move history should not be empty", player1.getMoveHistory().isEmpty());
-        assertEquals("Total moves should be 6", player1.getMoveHistory().size(), 6);
-        assertEquals("First move should be f(0,3)=3 ", "f(0,3)=3", player1.getMoveHistory().get(0));
-        assertEquals("Last move should be f(97,3)=100 ", "f(97,3)=100", player1.getMoveHistory().get(5));
         assertEquals("Player is winner", player1.isPlayerWon(), true);
     }
 
     @Test
     public void testPlayer_playMove_unsuccessfulPlayWithLadders() {
 
-        GameBoardImpl.GameBoardBuilder builder1 = new GameBoardImpl.GameBoardBuilder();
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder();
         builder1.setColumns(10);
         builder1.setRows(10);
         builder1.setNoOfPlayers(3);
@@ -233,26 +223,22 @@ public class SnakeNLadderTest {
         builder1.addLadder(87, 97);
 
         GameBoard board1 = builder1.buildGame();
-        GameController controller1 = new GameControllerImpl(board1);
+        GameController controller1 = new GameController(board1);
 
-        Player player1 = new PlayerImpl(controller1);
+        Player player1 = new Player(controller1);
         player1.playMove(4);
         player1.playMove(6);
         player1.playMove(2);
         player1.playMove(4);
 
         assertEquals("CurrentPosition should be 97", player1.getCurrentPosition(), 97);
-        assertFalse("MOve history should not be empty", player1.getMoveHistory().isEmpty());
-        assertEquals("Total moves should be 4", player1.getMoveHistory().size(), 4);
-        assertEquals("First move should be f(0,4)=14 ", "f(0,4)=14", player1.getMoveHistory().get(0));
-        assertEquals("Last move should be f(97,4)=97 ", "f(97,4)=97", player1.getMoveHistory().get(3));
         assertEquals("Player is winner", player1.isPlayerWon(), false);
     }
 
     @Test
     public void testPlayer_playMove_unsuccessfulPlayWithSnakes() {
 
-        GameBoardImpl.GameBoardBuilder builder1 = new GameBoardImpl.GameBoardBuilder();
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder();
         builder1.setColumns(10);
         builder1.setRows(10);
         builder1.setNoOfPlayers(3);
@@ -264,9 +250,9 @@ public class SnakeNLadderTest {
         builder1.addSnake(17, 7);
 
         GameBoard board1 = builder1.buildGame();
-        GameController controller1 = new GameControllerImpl(board1);
+        GameController controller1 = new GameController(board1);
 
-        Player player1 = new PlayerImpl(controller1);
+        Player player1 = new Player(controller1);
         player1.playMove(4);
         player1.playMove(3);
         player1.playMove(2);
@@ -274,17 +260,13 @@ public class SnakeNLadderTest {
         player1.playMove(5);
 
         assertEquals("CurrentPosition should be 90", player1.getCurrentPosition(), 90);
-        assertFalse("MOve history should not be empty", player1.getMoveHistory().isEmpty());
-        assertEquals("Total moves should be 5", player1.getMoveHistory().size(), 5);
-        assertEquals("First move should be f(0,4)=14 ", "f(0,4)=14", player1.getMoveHistory().get(0));
-        assertEquals("Last move should be f(85,5)=90 ", "f(85,5)=90", player1.getMoveHistory().get(4));
         assertEquals("Player is winner", player1.isPlayerWon(), false);
     }
 
     @Test
     public void testPlayer_playMove_multiPlayer() {
 
-        GameBoardImpl.GameBoardBuilder builder1 = new GameBoardImpl.GameBoardBuilder();
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder();
         builder1.setColumns(10);
         builder1.setRows(10);
         builder1.setNoOfPlayers(3);
@@ -296,10 +278,10 @@ public class SnakeNLadderTest {
         builder1.addSnake(17, 7);
 
         GameBoard board1 = builder1.buildGame();
-        GameController controller1 = new GameControllerImpl(board1);
+        GameController controller1 = new GameController(board1);
 
-        Player player1 = new PlayerImpl(controller1);
-        Player player2 = new PlayerImpl(controller1);
+        Player player1 = new Player(controller1);
+        Player player2 = new Player(controller1);
 
         player1.playMove(5);
         player2.playMove(3);
@@ -331,16 +313,7 @@ public class SnakeNLadderTest {
         assertEquals("CurrentPosition should be 12", player1.getCurrentPosition(), 12);
         assertEquals("CurrentPosition should be 25", player2.getCurrentPosition(), 25);
 
-        assertFalse("MOve history should not be empty", player1.getMoveHistory().isEmpty());
-        assertEquals("Total moves should be 5", player1.getMoveHistory().size(), 5);
-        assertEquals("First move should be f(0,5)=5 ", "f(0,5)=5", player1.getMoveHistory().get(0));
-        assertEquals("Last move should be f(7,5)=12 ", "f(7,5)=12", player1.getMoveHistory().get(4));
         assertEquals("Player is winner", player1.isPlayerWon(), false);
-
-        assertFalse("MOve history should not be empty", player2.getMoveHistory().isEmpty());
-        assertEquals("Total moves should be 5", player2.getMoveHistory().size(), 5);
-        assertEquals("First move should be f(0,3)=3 ", "f(0,3)=3", player2.getMoveHistory().get(0));
-        assertEquals("Last move should be f(22,3)=25 ", "f(22,3)=25", player2.getMoveHistory().get(4));
         assertEquals("Player is winner", player2.isPlayerWon(), false);
 
     }
@@ -348,7 +321,7 @@ public class SnakeNLadderTest {
     @Test
     public void testPlayer_playMove_multiPlayer_Player2Wins() {
 
-        GameBoardImpl.GameBoardBuilder builder1 = new GameBoardImpl.GameBoardBuilder();
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder();
         builder1.setColumns(10);
         builder1.setRows(10);
         builder1.setNoOfPlayers(3);
@@ -360,10 +333,10 @@ public class SnakeNLadderTest {
         builder1.addSnake(17, 7);
 
         GameBoard board1 = builder1.buildGame();
-        GameController controller1 = new GameControllerImpl(board1);
+        GameController controller1 = new GameController(board1);
 
-        Player player1 = new PlayerImpl(controller1);
-        Player player2 = new PlayerImpl(controller1);
+        Player player1 = new Player(controller1);
+        Player player2 = new Player(controller1);
 
         player1.playMove(5);
         player2.playMove(3);
@@ -395,23 +368,14 @@ public class SnakeNLadderTest {
         assertEquals("CurrentPosition should be 12", player1.getCurrentPosition(), 12);
         assertEquals("CurrentPosition should be 25", player2.getCurrentPosition(), 100);
 
-        assertFalse("MOve history should not be empty", player1.getMoveHistory().isEmpty());
-        assertEquals("Total moves should be 5", player1.getMoveHistory().size(), 5);
-        assertEquals("First move should be f(0,5)=5 ", "f(0,5)=5", player1.getMoveHistory().get(0));
-        assertEquals("Last move should be f(7,5)=12 ", "f(7,5)=12", player1.getMoveHistory().get(4));
         assertEquals("Player is winner", player1.isPlayerWon(), false);
-
-        assertFalse("MOve history should not be empty", player2.getMoveHistory().isEmpty());
-        assertEquals("Total moves should be 5", player2.getMoveHistory().size(), 5);
-        assertEquals("First move should be f(0,3)=3 ", "f(0,3)=3", player2.getMoveHistory().get(0));
-        assertEquals("Last move should be f(98,2)=100 ", "f(98,2)=100", player2.getMoveHistory().get(4));
         assertEquals("Player is winner", player2.isPlayerWon(), true);
 
     }
 
     @Test
     public void testPlayer_winWithExactNumber() {
-        GameBoardImpl.GameBoardBuilder builder1 = new GameBoardImpl.GameBoardBuilder();
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder();
         builder1.setColumns(10);
         builder1.setRows(10);
         builder1.setNoOfPlayers(3);
@@ -420,9 +384,9 @@ public class SnakeNLadderTest {
         builder1.addLadder(15, 97);
 
         GameBoard board1 = builder1.buildGame();
-        GameController controller1 = new GameControllerImpl(board1);
+        GameController controller1 = new GameController(board1);
 
-        Player player1 = new PlayerImpl(controller1);
+        Player player1 = new Player(controller1);
 
         player1.playMove(4);
         player1.playMove(1);
@@ -435,45 +399,6 @@ public class SnakeNLadderTest {
         player1.playMove(3);
         assertEquals("CurrentPosition should be 100", player1.getCurrentPosition(), 100);
         assertTrue("Player1 wins the game.", player1.isPlayerWon());
-
-        assertFalse("MOve history should not be empty", player1.getMoveHistory().isEmpty());
-        assertEquals("Total moves should be 5", player1.getMoveHistory().size(), 5);
-        assertEquals("third LAst move should be f(97,6)=97 ", "f(97,6)=97", player1.getMoveHistory().get(2));
-        assertEquals("Second Last move should be f(97,4)=97 ", "f(97,4)=97", player1.getMoveHistory().get(3));
-        assertEquals("Last move should be f(97,3)=100 ", "f(97,3)=100", player1.getMoveHistory().get(4));
-
-
     }
 
-    @Test
-    public void testPlayer_undoMove() {
-        GameBoardImpl.GameBoardBuilder builder1 = new GameBoardImpl.GameBoardBuilder();
-        builder1.setColumns(10);
-        builder1.setRows(10);
-        builder1.setNoOfPlayers(3);
-
-        builder1.addLadder(4, 14);
-        builder1.addLadder(9, 16);
-        builder1.addLadder(20, 95);
-
-        builder1.addSnake(17, 7);
-
-        GameBoard board1 = builder1.buildGame();
-        GameController controller1 = new GameControllerImpl(board1);
-
-        Player player1 = new PlayerImpl(controller1);
-
-        player1.playMove(4);
-
-        assertEquals("CurrentPosition should be 14", player1.getCurrentPosition(), 14);
-        assertFalse("MOve history should not be empty", player1.getMoveHistory().isEmpty());
-        assertEquals("Total moves should be 1", player1.getMoveHistory().size(), 1);
-        assertEquals("Last move should be f(0,4)=14 ", "f(0,4)=14", player1.getMoveHistory().get(0));
-
-        player1.undoMove();
-
-        assertEquals("CurrentPosition should be 0", player1.getCurrentPosition(), 0);
-        assertTrue("Move history should be empty", player1.getMoveHistory().isEmpty());
-        assertEquals("Total moves should be 0", player1.getMoveHistory().size(), 0);
-    }
 }

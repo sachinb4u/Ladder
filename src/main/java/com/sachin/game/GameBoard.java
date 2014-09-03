@@ -102,7 +102,7 @@ public class GameBoard {
                 '}';
     }
 
-    public enum ConfigConstants {
+    private enum ConfigConstants {
         rows, columns, ladders, snakes, noOfPlayers
     }
 
@@ -227,40 +227,20 @@ public class GameBoard {
             return snakeMap;
         }
 
-        public int getRows() {
-            return rows;
-        }
-
         public void setRows(int rows) {
             this.rows = rows;
-        }
-
-        public int getColumns() {
-            return columns;
         }
 
         public void setColumns(int columns) {
             this.columns = columns;
         }
 
-        public void removeLadder(int from, int to) {
-            this.ladders1.remove(from);
-        }
-
         public void addLadder(int from, int to) {
             this.ladders1.put(from, to);
         }
 
-        public void removeSnake(int from, int to) {
-            snakes.remove(from);
-        }
-
         public void addSnake(int from, int to) {
             this.snakes.put(from, to);
-        }
-
-        public int getNoOfPlayers() {
-            return noOfPlayers;
         }
 
         public void setNoOfPlayers(int noOfPlayers) {

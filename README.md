@@ -20,7 +20,7 @@ Output
 Configuration
 -------------
   - src/main/resources/config.properties contains the default game configuration
-  - use optionally can build the configuration programmtically
+  - use optionally can build the configuration pragmatically
   - current program uses configuration from config.properties.
   - change values in cofig.properties to try out different options of rows, columns, ladders, snakes and noOfPlayers
   
@@ -31,12 +31,13 @@ Validations
     - ladder should always go from smaller cell to greater cell
     - snake should always go from greater cell to smaller cell
     - ladder and snake cannot be present on same cell. 
-    
+
 Unit Tests
 ----------
-  - Unit tests for few classes are added
+  - Unit tests for all classes are added
   - Update : 25 July 2014 - testcases added
             - DiceRollerTest
             - GameControllerTest
             - GameRuleTest
             - PlayerTest
+  - TestCases updated as per feedback mail on 26-08-2014

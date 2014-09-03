@@ -1,4 +1,4 @@
-package com.sachin.game.test;
+package com.sachin.game.test.unit;
 
 import com.sachin.game.GameController;
 import com.sachin.game.Player;
@@ -17,7 +17,6 @@ import java.util.List;
 public class GameControllerTest {
 
     private GameBoard gameBoard;
-
     private GameController controller;
 
     @Before
@@ -27,12 +26,13 @@ public class GameControllerTest {
     }
 
     @Test
-    public void testGetGameConfiguration() {
+    public void testGetGameBoard() {
 
         GameBoard conf = controller.getGameBoard();
 
         Assert.assertEquals(conf, gameBoard);
     }
+
 
     @Test
     public void testGetPlayers() {
@@ -50,12 +50,6 @@ public class GameControllerTest {
         }
     }
 
-    @Test
-    public void testGetRollDice() {
-        int dice = controller.rollDice();
-
-        Assert.assertTrue(dice > 0 && dice < 7);
-    }
 
     @Test
     public void testResetPlayers() {
@@ -73,79 +67,6 @@ public class GameControllerTest {
             Assert.assertEquals(player.getCurrentPosition(), 0);
             Assert.assertEquals(player.isPlayerWon(), false);
         }
-    }
-
-    private GameBoard initGameConfiguration() {
-
-        GameBoard.GameBoardBuilder builder = new GameBoard.GameBoardBuilder();
-        builder.setColumns(10);
-        builder.setRows(10);
-        builder.setNoOfPlayers(2);
-
-        builder.addLadder(5, 20);
-        builder.addLadder(24, 56);
-        builder.addLadder(28, 45);
-
-        builder.addSnake(48, 7);
-        builder.addSnake(63, 32);
-        builder.addSnake(84, 54);
-
-        return builder.buildGame();
-    }
-
-    @Test(expected = AssertionError.class)
-    public void tesGetNextMoveInvalidDiceValue() {
-        // invalid Dice value should throw IllegalArgumentException
-        controller.getNextMove(11, 8);
-
-    }
-
-    @Test
-    public void testIsSnakeBite() {
-        // non ladder and non snake
-        Assert.assertFalse(gameBoard.isSnakeBite(11));
-        // non ladder and non snake
-        Assert.assertFalse(gameBoard.isSnakeBite(33));
-        // non ladder and non snake
-        Assert.assertFalse(gameBoard.isSnakeBite(76));
-
-        // ladder cell
-        Assert.assertFalse(gameBoard.isSnakeBite(5));
-        // ladder cell
-        Assert.assertFalse(gameBoard.isSnakeBite(24));
-        // ladder cell
-        Assert.assertFalse(gameBoard.isSnakeBite(28));
-
-        // snake cell
-        Assert.assertTrue(gameBoard.isSnakeBite(48));
-        // snake cell
-        Assert.assertTrue(gameBoard.isSnakeBite(63));
-        // snake cell
-        Assert.assertTrue(gameBoard.isSnakeBite(84));
-    }
-
-    @Test
-    public void testIsLadderJump() {
-        // non ladder and non snake
-        Assert.assertFalse(gameBoard.isLadderJump(11));
-        // non ladder and non snake
-        Assert.assertFalse(gameBoard.isLadderJump(33));
-        // non ladder and non snake
-        Assert.assertFalse(gameBoard.isLadderJump(76));
-
-        // ladder cell
-        Assert.assertTrue(gameBoard.isLadderJump(5));
-        // ladder cell
-        Assert.assertTrue(gameBoard.isLadderJump(24));
-        // ladder cell
-        Assert.assertTrue(gameBoard.isLadderJump(28));
-
-        // snake cell
-        Assert.assertFalse(gameBoard.isLadderJump(48));
-        // snake cell
-        Assert.assertFalse(gameBoard.isLadderJump(63));
-        // snake cell
-        Assert.assertFalse(gameBoard.isLadderJump(84));
     }
 
     @Test
@@ -185,6 +106,12 @@ public class GameControllerTest {
         Assert.assertEquals(controller.getNextMove(95, 5), 100);
     }
 
+    @Test(expected = AssertionError.class)
+    public void tesGetNextMoveInvalidDiceValue() {
+        // invalid Dice value should throw IllegalArgumentException
+        controller.getNextMove(11, 8);
+    }
+
     @Test
     public void testRollDiceValidValue() {
         int dice = controller.rollDice();
@@ -208,4 +135,23 @@ public class GameControllerTest {
         Assert.assertFalse("frequency of any number should not be 5 or more than that in consecutive 6 attempts", Collections.frequency(diceValArray, Integer.valueOf(5)) >= 5);
         Assert.assertFalse("frequency of any number should not be 5 or more than that in consecutive 6 attempts", Collections.frequency(diceValArray, Integer.valueOf(6)) >= 5);
     }
+
+    private GameBoard initGameConfiguration() {
+
+        GameBoard.GameBoardBuilder builder = new GameBoard.GameBoardBuilder();
+        builder.setColumns(10);
+        builder.setRows(10);
+        builder.setNoOfPlayers(2);
+
+        builder.addLadder(5, 20);
+        builder.addLadder(24, 56);
+        builder.addLadder(28, 45);
+
+        builder.addSnake(48, 7);
+        builder.addSnake(63, 32);
+        builder.addSnake(84, 54);
+
+        return builder.buildGame();
+    }
+
 }

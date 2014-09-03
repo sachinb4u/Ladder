@@ -1,4 +1,4 @@
-package com.sachin.game.test;
+package com.sachin.game.test.unit;
 
 import com.sachin.game.GameBoard;
 import com.sachin.game.GameController;
@@ -20,7 +20,6 @@ public class PlayerTest {
 
     @Mock
     private GameBoard configuration;
-
     @Mock
     private GameController controller;
 
@@ -89,17 +88,6 @@ public class PlayerTest {
         int res = player.getCurrentPosition();
 
         Assert.assertEquals(res, current);
-    }
-
-    @Test
-    public void testGetMoveHistory() {
-        int current = 2;
-        int res = 7;
-        when(controller.getNextMove(anyInt(), anyInt())).thenReturn(res);
-        when(player.getCurrentPosition()).thenReturn(current).thenReturn(current).thenCallRealMethod();
-
-        player.playMove(5);
-
     }
 
     @Test

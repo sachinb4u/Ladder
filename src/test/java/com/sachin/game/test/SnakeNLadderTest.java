@@ -6,6 +6,8 @@ import com.sachin.game.Player;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -120,9 +122,9 @@ public class SnakeNLadderTest {
     /**
      * * building a board with snake and ladder at same cell should throw an exception
      */
-/*    @Test(expected = IllegalStateException.class)
+/*   @Test(expected = IllegalStateException.class)
     public void testGameBoard_LadderSnakeAtSameCell(){
-        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder(builder);
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder(initGame());
         builder1.addSnake(33, 17);
         builder1.addLadder(33, 74);
 
@@ -236,7 +238,7 @@ public class SnakeNLadderTest {
     }
 
     @Test
-    public void testPlayer_playMove_unsuccessfulPlayWithSnakes() {
+    public void testPlay_playMove_unsuccessfulPlayWithSnakes() {
 
         GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder();
         builder1.setColumns(10);
@@ -264,7 +266,7 @@ public class SnakeNLadderTest {
     }
 
     @Test
-    public void testPlayer_playMove_multiPlayer() {
+    public void testPlay_playMove_multiPlayer() {
 
         GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder();
         builder1.setColumns(10);
@@ -319,12 +321,12 @@ public class SnakeNLadderTest {
     }
 
     @Test
-    public void testPlayer_playMove_multiPlayer_Player2Wins() {
+    public void testPlay_playMove_multiPlayer_Player2Wins() {
 
         GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder();
         builder1.setColumns(10);
         builder1.setRows(10);
-        builder1.setNoOfPlayers(3);
+        builder1.setNoOfPlayers(2);
 
         builder1.addLadder(4, 14);
         builder1.addLadder(9, 16);
@@ -373,8 +375,26 @@ public class SnakeNLadderTest {
 
     }
 
+    /**
+     * TestPlay0 - Winning path
+     *
+     * Board : 10 x 10
+     * Snakes :
+     * Ladders : 4-14, 15-97
+     * Players : 3
+     * WinningPosition : 100
+     * Players Dice Rolls :
+     *      Player1 : 4, 1, 6, 4, 3
+     *      Player2 : 6, 3, 5, 4, 2
+     *      Player3 : 3, 2, 6, 5, 1
+     * Expected Position :
+     *      Player1 : 100
+     *      Player2 : 20
+     *      Player3 : 17
+     * Expected Winner : Player1
+     */
     @Test
-    public void testPlayer_winWithExactNumber() {
+    public void testPlay_winWithExactNumber() {
         GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder();
         builder1.setColumns(10);
         builder1.setRows(10);
@@ -386,19 +406,167 @@ public class SnakeNLadderTest {
         GameBoard board1 = builder1.buildGame();
         GameController controller1 = new GameController(board1);
 
-        Player player1 = new Player(controller1);
+        List<Player> players = controller1.getPlayers();
+        assertEquals("NoOfPlayers should be 3",players.size(), 3);
+
+        Player player1 = players.get(0);
+        Player player2 = players.get(1);
+        Player player3 = players.get(2);
 
         player1.playMove(4);
+        player2.playMove(6);
+        player3.playMove(3);
+
         player1.playMove(1);
+        player2.playMove(3);
+        player3.playMove(2);
+
         player1.playMove(6);
-        assertEquals("CurrentPosition should be 97", player1.getCurrentPosition(), 97);
+        player2.playMove(5);
+        player3.playMove(6);
 
         player1.playMove(4);
-        assertEquals("CurrentPosition should be 97", player1.getCurrentPosition(), 97);
+        player2.playMove(4);
+        player3.playMove(5);
 
         player1.playMove(3);
+        player2.playMove(2);
+        player3.playMove(1);
+
         assertEquals("CurrentPosition should be 100", player1.getCurrentPosition(), 100);
+        assertEquals("CurrentPosition should be 20", player2.getCurrentPosition(), 20);
+        assertEquals("CurrentPosition should be 17", player3.getCurrentPosition(), 17);
+
         assertTrue("Player1 wins the game.", player1.isPlayerWon());
+        assertFalse("Player2 loses the game.", player2.isPlayerWon());
+        assertFalse("Player3 loses the game.", player3.isPlayerWon());
     }
 
+    /**
+     * TestPlay1
+     *
+     * Board : 5 x 5
+     * Snakes : 13-7, 23-4, 18-12
+     * Ladders : 3-11, 14-21, 9-24
+     * Players : 1
+     * WinningPosition : 25
+     * Players Dice Rolls : 3, 5, 3
+     * Expected Position : 19
+     * Winner : False
+     */
+    @Test
+    public void testPlay1(){
+        //setup board
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder();
+        builder1.setColumns(5);
+        builder1.setRows(5);
+        builder1.setNoOfPlayers(1);
+        builder1.addLadder(3, 11);
+        builder1.addLadder(14, 21);
+        builder1.addLadder(9, 24);
+        builder1.addSnake(13, 7);
+        builder1.addSnake(23, 4);
+        builder1.addSnake(18, 12);
+
+        //initialize controller and player
+        GameController controller1 = new GameController(builder1.buildGame());
+        List<Player> players = controller1.getPlayers();
+        assertEquals("NoOfPlayers should be 1",players.size(), 1);
+
+        Player player = players.get(0);
+        //play the game
+        player.playMove(3);
+        player.playMove(5);
+        player.playMove(3);
+
+        //validate
+        assertEquals("CurrentPosition should be 19", 19 , player.getCurrentPosition());
+        assertFalse("Player has not won", player.isPlayerWon());
+    }
+
+    /**
+     * TestPlay2
+     *
+     * Board : 5 x 5
+     * Snakes : 13-7, 23-4, 18-12
+     * Ladders : 3-11, 14-21, 9-24
+     * Players : 1
+     * WinningPosition : 25
+     * Players Dice Rolls : 4, 6, 2, 2
+     * Expected Position : 21
+     * Winner : False
+     */
+    @Test
+    public void testPlay2(){
+        //setup board
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder();
+        builder1.setColumns(5);
+        builder1.setRows(5);
+        builder1.setNoOfPlayers(1);
+        builder1.addLadder(3, 11);
+        builder1.addLadder(14, 21);
+        builder1.addLadder(9, 24);
+        builder1.addSnake(13, 7);
+        builder1.addSnake(23, 4);
+        builder1.addSnake(18, 12);
+
+        //initialize controller and player
+        GameController controller1 = new GameController(builder1.buildGame());
+        List<Player> players = controller1.getPlayers();
+        assertEquals("NoOfPlayers should be 1",players.size(), 1);
+
+        Player player = players.get(0);
+        //play the game
+        player.playMove(4);
+        player.playMove(6);
+        player.playMove(2);
+        player.playMove(2);
+
+        //validate
+        assertEquals("CurrentPosition should be 21", 21 , player.getCurrentPosition());
+        assertFalse("Player has not won", player.isPlayerWon());
+    }
+
+    /**
+     * TestPlay3
+     * Board : 5 x 5
+     * Snakes : 13-7, 23-4, 18-12
+     * Ladders : 3-11, 14-21, 9-24
+     * Players : 1
+     * WinningPosition : 25
+     * Players Dice Rolls : 1, 5, 3, 6, 1
+     * Expected Position : 25
+     * Winner : True
+     */
+    @Test
+    public void testPlay3(){
+        //setup board
+        GameBoard.GameBoardBuilder builder1 = new GameBoard.GameBoardBuilder();
+        builder1.setColumns(5);
+        builder1.setRows(5);
+        builder1.setNoOfPlayers(1);
+        builder1.addLadder(3, 11);
+        builder1.addLadder(14, 21);
+        builder1.addLadder(9, 24);
+        builder1.addSnake(13, 7);
+        builder1.addSnake(23, 4);
+        builder1.addSnake(18, 12);
+
+        //initialize controller and player
+        GameController controller1 = new GameController(builder1.buildGame());
+        List<Player> players = controller1.getPlayers();
+        assertEquals("NoOfPlayers should be 1",players.size(), 1);
+
+        Player player = players.get(0);
+        //play the game
+        player.playMove(1);
+        player.playMove(5);
+        player.playMove(3);
+        player.playMove(6);
+        player.playMove(1);
+
+        //validate
+        assertEquals("CurrentPosition should be 25", 25 , player.getCurrentPosition());
+        assertTrue("Player wins", player.isPlayerWon());
+    }
 }

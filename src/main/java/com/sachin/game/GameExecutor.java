@@ -4,69 +4,71 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
+ *
  * Created by SachinBhosale on 7/13/2014.
  */
 public class GameExecutor {
 
     private static final Scanner scanner = new Scanner(System.in);
 
+    private final GameBoard gameBoard;
+    private final GameController controller;
+
+
+    public GameExecutor() {
+        gameBoard = GameBoard.GameBoardBuilder.getDefaultGameConfiguration();
+        controller = new GameController(gameBoard);
+    }
+
+    /**
+     * Get user input from commandline
+     *
+     * @return {String}
+     */
+    private static String getUserInput() {
+        String input = scanner.next();
+
+        if ("quit".equalsIgnoreCase(input)) {
+            showUserMessage("Thanks for playing Snake & Ladder game!");
+            System.exit(0);
+        }
+        return input;
+    }
+
+    /**
+     * Print Message on command line
+     *
+     * @param str message
+     */
+    private static void showUserMessage(String str) {
+        System.out.println(str);
+    }
+
     /**
      * Run the show
      */
     public void executeGame() {
-        /**
-         * Get / Build Game Configuration
-         */
-        GameBoard configuration = GameBoard.GameBoardBuilder.getDefaultGameConfiguration();
+
+        showUserMessage("Let's start a game.");
 
         /**
-         * Get the GameController to run the game
+         * Reset players with new players with initial position 0 and default names
          */
-        GameController controller = new GameController(configuration);
+        controller.resetPlayers();
 
-        do {
-            showUserMessage("Let's start a game.");
+        List<Player> players = controller.getPlayers();
 
-            /**
-             * Reset players with new players with initial position 0 and default names
-             */
-            controller.resetPlayers();
-
-            List<Player> players = controller.getPlayers();
-
-            /**
-             * Get Names for players
-             */
-            getNamesForPlayer(players);
-
-            /**
-             * while player is not winning ,
-             * roll the dice and go to next cell
-             * Each player gets his turn in round robin manner
-             */
-            while (!isPlayerWonInRoundRobinPlay(controller, players)) ;
-
-            showUserMessage("GameSetup : " + configuration.toString());
-            showUserMessage("Play New Game ?? ( Yes / No ) ");
-
-        } while (scanner.next().matches("[yY][\\w]*"));
-    }
-
-    /**
-     * Get Names for players and set it
-     * @param players players with names entered by User
-     */
-    private void getNamesForPlayer(List<Player> players) {
-        for (Player player : players) {
-            showUserMessage("Enter name for " + player.getName());
-            String name = getUserInput();
-            player.setName(name);
-        }
+        /**
+         * while player is not winning ,
+         * roll the dice and go to next cell
+         * Each player gets his turn in round robin manner
+         */
+        while (!isPlayerWonInRoundRobinPlay(controller, players)) ;
     }
 
     /**
      * @param controller GameController
-     * @param players Players
+     * @param players    Players
      * @return flag if any player wins
      */
     private boolean isPlayerWonInRoundRobinPlay(GameController controller, List<Player> players) {
@@ -103,26 +105,11 @@ public class GameExecutor {
         return false;
     }
 
-    /**
-     * Get user input from commandline
-     * @return {String}
-     */
-    private static String getUserInput() {
-        String input = scanner.next();
-
-        if ("quit".equalsIgnoreCase(input)) {
-            showUserMessage("Thanks for playing Snake & Ladder game!");
-            System.exit(0);
-        }
-        return input;
+    public GameBoard getGameBoard() {
+        return gameBoard;
     }
 
-    /**
-     * Print Message on command line
-     * @param str message
-     */
-    private static void showUserMessage(String str) {
-        System.out.println(str);
+    public GameController getController() {
+        return controller;
     }
-
 }

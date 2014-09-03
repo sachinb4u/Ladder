@@ -9,10 +9,9 @@ public class Main {
     /**
      * Run the Snake & Ladder Game
      *
-     * @param args
+     * @param args commandline arguments
      */
     public static void main(String[] args) {
-        GameExecutor gameExecutor = new GameExecutor();
-        gameExecutor.executeGame();
+        new GameExecutor().executeGame();
     }
 }

@@ -1,9 +1,6 @@
 package com.sachin.game;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * Created by SachinBhosale on 7/11/2014.
@@ -17,13 +14,14 @@ import java.util.StringTokenizer;
 public class GameBoard {
 
     private static final ResourceBundle configBundle = ResourceBundle.getBundle("config");
+    private static final int NOT_FOUND = -1;
 
     private int rows;
     private int columns;
     private Map<Integer, Integer> ladders;
     private Map<Integer, Integer> snakes;
     private int noOfPlayers;
-    private int maxCell;
+    private int winningCell;
 
     /**
      * All GameBoard instances should come from GameBoardBuilder
@@ -40,12 +38,20 @@ public class GameBoard {
         return columns;
     }
 
+    /**
+     * Return unmodifiable map
+     * @return
+     */
     public Map<Integer, Integer> getLadders() {
-        return ladders;
+        return Collections.unmodifiableMap(ladders);
     }
 
+    /**
+     * Return unmodifiable map
+     * @return
+     */
     public Map<Integer, Integer> getSnakes() {
-        return snakes;
+        return Collections.unmodifiableMap(snakes);
     }
 
     public int getNoOfPlayers() {
@@ -58,21 +64,31 @@ public class GameBoard {
 
     public int getSnakeForCell(int cell) {
 
-        return snakes.containsKey(cell) ? snakes.get(cell) : -1;
+        return snakes.containsKey(cell) ? snakes.get(cell) : NOT_FOUND;
     }
 
-    public int getMaxCell() {
-        return maxCell;
+    public int getWinningCell() {
+        return winningCell;
     }
 
+    /**
+     * Check if current cell has snake-bite
+     * @param cell
+     * @return
+     */
     public boolean isSnakeBite(int cell) {
         int snake = getSnakeForCell(cell);
-        return snake == -1 ? false : true;
+        return snake != NOT_FOUND;
     }
 
+    /**
+     * Check if current cell has ladder-jump
+     * @param cell
+     * @return
+     */
     public boolean isLadderJump(int cell) {
         int ladder = getLadderForCell(cell);
-        return ladder == -1 ? false : true;
+        return ladder != NOT_FOUND;
     }
 
     public String toString() {
@@ -82,7 +98,7 @@ public class GameBoard {
                 ", ladders1=" + ladders.values() +
                 ", snakes=" + snakes.values() +
                 ", noOfPlayers=" + noOfPlayers +
-                ", maxCell=" + maxCell +
+                ", winningCell=" + winningCell +
                 '}';
     }
 
@@ -103,7 +119,6 @@ public class GameBoard {
 
         /**
          * Copy constructor
-         *
          * @param builder
          */
         public GameBoardBuilder(GameBoardBuilder builder) {
@@ -120,7 +135,6 @@ public class GameBoard {
 
         /**
          * Get default configuration based on properties set in config.properties
-         *
          * @return GameBoard
          * @throws java.lang.IllegalStateException
          */
@@ -156,7 +170,7 @@ public class GameBoard {
                 throw new IllegalStateException("Columns number should be between 1 and 99");
             }
 
-            if (board.maxCell > 999) {
+            if (board.winningCell > 999) {
                 throw new IllegalStateException("Cells greater than 999 are not supported");
             }
 
@@ -178,13 +192,12 @@ public class GameBoard {
 
         /**
          * Read ladders1 property from config bundle
-         *
          * @return
          */
         private static Map<Integer, Integer> getDefaultLadders() {
             String ladderString = configBundle.getString(ConfigConstants.ladders.name());
             StringTokenizer tokenizer = new StringTokenizer(ladderString, ",");
-            Map<Integer, Integer> ladderMap = new HashMap<Integer, Integer>();
+            Map<Integer, Integer> ladderMap = new HashMap<>();
 
             while (tokenizer.hasMoreTokens()) {
                 String token = tokenizer.nextToken();
@@ -197,7 +210,6 @@ public class GameBoard {
 
         /**
          * Read snakes property from config bundle
-         *
          * @return
          */
         private static Map<Integer, Integer> getDefaultSnakes() {
@@ -205,7 +217,7 @@ public class GameBoard {
 
             StringTokenizer tokenizer = new StringTokenizer(snakesStr, ",");
 
-            Map<Integer, Integer> snakeMap = new HashMap<Integer, Integer>();
+            Map<Integer, Integer> snakeMap = new HashMap<>();
             while (tokenizer.hasMoreTokens()) {
                 String token = tokenizer.nextToken();
                 String[] cells = token.split(":");
@@ -268,7 +280,7 @@ public class GameBoard {
             gameBoard.columns = this.columns;
             gameBoard.ladders = new HashMap<>(ladders1);
             gameBoard.snakes = new HashMap<>(snakes);
-            gameBoard.maxCell = this.rows * this.columns;
+            gameBoard.winningCell = this.rows * this.columns;
             gameBoard.noOfPlayers = this.noOfPlayers;
 
             validateGameConfiguration(gameBoard);

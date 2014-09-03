@@ -1,4 +1,4 @@
-package com.sachin.game.api.test;
+package com.sachin.game.test;
 
 import com.sachin.game.GameController;
 import com.sachin.game.Player;

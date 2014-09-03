@@ -1,4 +1,4 @@
-package com.sachin.game.api.test;
+package com.sachin.game.test;
 
 import com.sachin.game.GameBoard;
 import org.junit.Assert;
@@ -23,7 +23,7 @@ public class GameConfigurationTest {
 
         Assert.assertTrue("Default Columns are 12", 12 == defaultConfiguration.getColumns());
         Assert.assertTrue("Default rows are 10", 10 == defaultConfiguration.getRows());
-        Assert.assertTrue("Default Columns are 120", 120 == defaultConfiguration.getMaxCell());
+        Assert.assertTrue("Default Columns are 120", 120 == defaultConfiguration.getWinningCell());
         Assert.assertTrue("No of players is 2", 2 == defaultConfiguration.getNoOfPlayers());
 
     }
@@ -49,7 +49,7 @@ public class GameConfigurationTest {
 
         Assert.assertTrue("Config Columns are 12", 12 == configuration.getColumns());
         Assert.assertTrue("Config rows are 10", 10 == configuration.getRows());
-        Assert.assertTrue("Total cells are 120", 120 == configuration.getMaxCell());
+        Assert.assertTrue("Total cells are 120", 120 == configuration.getWinningCell());
         Assert.assertTrue("No of players is 3", 3 == configuration.getNoOfPlayers());
 
         Assert.assertTrue(14 == configuration.getLadderForCell(4));
@@ -74,7 +74,7 @@ public class GameConfigurationTest {
 
         GameBoard.GameBoardBuilder builder = new GameBoard.GameBoardBuilder();
         try {
-            GameBoard configuration1 = builder.buildGame();
+            builder.buildGame();
         } catch (IllegalStateException ex) {
             Assert.assertTrue("Invalid configuration should throw an exception", true);
             return;

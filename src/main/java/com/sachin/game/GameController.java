@@ -15,8 +15,7 @@ public class GameController {
 
     /**
      * Initialize GameController for GameBoard
-     *
-     * @param gameBoard
+     * @param gameBoard GameBoard
      */
     public GameController(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
@@ -24,8 +23,7 @@ public class GameController {
 
     /**
      * Get GameBoard
-     *
-     * @return
+     * @return GameBoard
      */
     public GameBoard getGameBoard() {
         return this.gameBoard;
@@ -33,7 +31,6 @@ public class GameController {
 
     /**
      * Get the players of the game with default names
-     *
      * @return players
      */
     public List<Player> getPlayers() {
@@ -46,7 +43,6 @@ public class GameController {
     /**
      * Create new Players with default name and initial state
      * and as per GameBoard configuration
-     *
      * @return players
      */
     private List<Player> createNewPlayers() {
@@ -59,7 +55,6 @@ public class GameController {
             gamePlayer.setName("Player" + (i + 1));
             playersNew.add(gamePlayer);
         }
-
         return playersNew;
     }
 
@@ -72,9 +67,8 @@ public class GameController {
 
     /**
      * Get the next cell number based on current position and dicevalue
-     *
-     * @param currentCell
-     * @param diceValue
+     * @param currentCell cell number
+     * @param diceValue dice value
      * @return nextCell
      */
     public int getNextMove(int currentCell, int diceValue) {
@@ -83,19 +77,17 @@ public class GameController {
         int nextCell = currentCell + diceValue;
 
         if (gameBoard.isSnakeBite(nextCell)) {
-            int snake = gameBoard.getSnakeForCell(nextCell);
-            nextCell = snake;
+            nextCell = gameBoard.getSnakeForCell(nextCell);
         }
 
         if (gameBoard.isLadderJump(nextCell)) {
-            int ladder = gameBoard.getLadderForCell(nextCell);
-            nextCell = ladder;
+            nextCell = gameBoard.getLadderForCell(nextCell);
         }
 
         /**
          * for winning exact number is required.
          */
-        if (nextCell > gameBoard.getMaxCell()) {
+        if (nextCell > gameBoard.getWinningCell()) {
             return currentCell;
         }
 
@@ -105,7 +97,6 @@ public class GameController {
     /**
      * Returns a pseudorandom, uniformly distributed {@code int} value
      * between 1 (inclusive) and 6 (inclusive)
-     *
      * @return int
      */
     public int rollDice() {

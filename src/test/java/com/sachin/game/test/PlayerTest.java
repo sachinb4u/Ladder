@@ -1,4 +1,4 @@
-package com.sachin.game.api.test;
+package com.sachin.game.test;
 
 import com.sachin.game.GameBoard;
 import com.sachin.game.GameController;
@@ -8,8 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.List;
 
 import static org.mockito.Mockito.*;
 
@@ -107,7 +105,7 @@ public class PlayerTest {
     @Test
     public void testIsPlayerWonInvalid() {
         when(controller.getGameBoard()).thenReturn(configuration);
-        when(configuration.getMaxCell()).thenReturn(100);
+        when(configuration.getWinningCell()).thenReturn(100);
         when(player.getCurrentPosition()).thenReturn(99);
 
         boolean result = player.isPlayerWon();
@@ -118,7 +116,7 @@ public class PlayerTest {
     @Test
     public void testIsPlayerWonInvalid2() {
         when(controller.getGameBoard()).thenReturn(configuration);
-        when(configuration.getMaxCell()).thenReturn(100);
+        when(configuration.getWinningCell()).thenReturn(100);
         // player should no go to current position greater than max cell
         when(player.getCurrentPosition()).thenReturn(104);
 
@@ -130,7 +128,7 @@ public class PlayerTest {
     @Test
     public void testIsPlayerWonValid() {
         when(controller.getGameBoard()).thenReturn(configuration);
-        when(configuration.getMaxCell()).thenReturn(100);
+        when(configuration.getWinningCell()).thenReturn(100);
         when(player.getCurrentPosition()).thenReturn(100);
 
         boolean result = player.isPlayerWon();

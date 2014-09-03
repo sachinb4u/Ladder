@@ -11,29 +11,6 @@ public class GameExecutor {
     private static final Scanner scanner = new Scanner(System.in);
 
     /**
-     * Get user input from commandline
-     * @return {String}
-     */
-    private static String getUserInput() {
-        String input = scanner.next();
-
-        if ("quit".equalsIgnoreCase(input)) {
-            System.exit(0);
-        }
-
-        return input;
-    }
-
-    /**
-     * Print Message on command line
-     *
-     * @param str
-     */
-    private static void showUserMessage(String str) {
-        System.out.println(str);
-    }
-
-    /**
      * Run the show
      */
     public void executeGame() {
@@ -69,15 +46,6 @@ public class GameExecutor {
              */
             while (!isPlayerWonInRoundRobinPlay(controller, players)) ;
 
-            showUserMessage("Game Summary !!");
-
-            /**
-             * Show summary of each player's game
-             */
-            for (Player player : players) {
-                showUserMessage("Player : " + player.getName() + "'s Game History: ##");
-            }
-
             showUserMessage("GameSetup : " + configuration.toString());
             showUserMessage("Play New Game ?? ( Yes / No ) ");
 
@@ -86,8 +54,7 @@ public class GameExecutor {
 
     /**
      * Get Names for players and set it
-     *
-     * @param players
+     * @param players players with names entered by User
      */
     private void getNamesForPlayer(List<Player> players) {
         for (Player player : players) {
@@ -98,8 +65,8 @@ public class GameExecutor {
     }
 
     /**
-     * @param controller
-     * @param players
+     * @param controller GameController
+     * @param players Players
      * @return flag if any player wins
      */
     private boolean isPlayerWonInRoundRobinPlay(GameController controller, List<Player> players) {
@@ -134,6 +101,28 @@ public class GameExecutor {
             }
         }
         return false;
+    }
+
+    /**
+     * Get user input from commandline
+     * @return {String}
+     */
+    private static String getUserInput() {
+        String input = scanner.next();
+
+        if ("quit".equalsIgnoreCase(input)) {
+            showUserMessage("Thanks for playing Snake & Ladder game!");
+            System.exit(0);
+        }
+        return input;
+    }
+
+    /**
+     * Print Message on command line
+     * @param str message
+     */
+    private static void showUserMessage(String str) {
+        System.out.println(str);
     }
 
 }
